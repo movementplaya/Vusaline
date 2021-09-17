@@ -1,0 +1,53 @@
+WeaponData
+{
+	"printname"			"#Weapon_IFM_SteadyCam"
+	"BuiltRightHanded"		"0"
+	"MeleeWeapon"			"1"
+	"weight"			"5"
+	"item_flags"			"0"
+	"Damage"			"0"
+	"primary_ammo"			"None"
+	"secondary_ammo"		"None"
+	"bucket"			"1"
+	"bucket_position"		"3"
+	"viewmodel"				"models/weapons/c_models/c_bat.mdl"
+	"playermodel"			"models/weapons/c_models/c_bat.mdl"
+	"anim_prefix"			"bat"
+	SoundData
+	{
+		"melee_miss"		"Weapon_Bat.Miss"
+		"melee_hit"		"Weapon_Bat.HitFlesh"
+		"melee_hit_world"	"Weapon_Bat.HitWorld"
+	}
+	TextureData
+	{
+		"weapon"
+		{
+				"font"		"WeaponIcons"
+				"character"	"c"
+		}
+		"weapon_s"
+		{	
+				"font"		"WeaponIcons"
+				"character"	"c"
+		}
+
+		"ammo"
+		{
+				"file"		"sprites/a_icons1"
+				"x"		"55"
+				"y"		"60"
+				"width"		"73"
+				"height"	"15"
+		}
+
+		"crosshair"
+		{
+				"file"		"sprites/crosshairs"
+				"x"		"0"
+				"y"		"48"
+				"width"		"24"
+				"height"	"24"
+		}
+	}
+}

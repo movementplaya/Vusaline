@@ -1,0 +1,17 @@
+precache
+{
+	"model"			"models/class_menu/random_class_icon.mdl"
+	"model"			"models/items/medkit_small.mdl"
+	"model"			"models/props_ui/banner.mdl"
+	"model"			"models/vgui/UI_class01.mdl"
+	"model"			"models/vgui/UI_team01.mdl"
+	"model"			"models/vgui/UI_team01_blue.mdl"
+	"model"			"models/vgui/UI_team01_random.mdl"
+	"model"			"models/vgui/UI_team01_red.mdl"
+	"model"			"models/vgui/UI_team01_spectate.mdl"
+	"model"			"models/vgui/UI_welcome01_screen.mdl"
+	"model"			"models/vgui/ui_arena01.mdl"
+	"model"			"models/vgui/ui_arenadoor01.mdl"
+	"model"			"sprites/physbeam.vmt"
+	"model"			"sprites/white.vmt"
+}
