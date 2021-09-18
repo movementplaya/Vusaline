@@ -9,6 +9,8 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github.com/Joshua-Ashton/dxvk-native[dxvk-native] instead of ToGL)
+
 == Used custom configs previously?
 
 . Steam -> Library -> Team Fortress 2 -> Uncheck/disable "Keep games saves in the Steam Cloud for Team Fortress 2"
@@ -21,7 +23,7 @@ endif::[]
 
 == Setup
 . Replace Launch Options with:
-- `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog`
+- `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog -hushsteam`
 - Linux specific additions: `-glslcontrolflow -arbmode`
 . link:https://github.com/ghost-420/vusalo/archive/refs/heads/master.zip[Download Vusalo as a ZIP], then extract that ZIP
 . Place **`vusalo_file_operations.bat`** and **`revert_vusalo_file_operations.bat`** into the root directory of Team Fortress 2 (example: `D:\Steam\steamapps\common\Team Fortress 2`)
@@ -31,11 +33,6 @@ endif::[]
 
 == Extra steps
 . Use link:https://dl.bitsum.com/files/processlassosetup64.exe[Process Lasso] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High
-. If using OpenVPN, `pull-filter ignore "peer-id"` will prevent a 8 MTU decrease, which technically is better for network performance (since it's always below 1500 MTU on Windows)
-
-== Old (current public) link:https://rijin.solutions[RijiN] requirements
-* Remove `-nobreakpad -nosteamcontroller -glslcontrolflow -arbmode` from TF2's launch options
-* Use `block_crash_reporting=0` in **`vusalo_file_operations.bat`**
 
 == Avoid the following
 * Putting spaces in an option, such as `dualcore = 1`(incorrect) instead of `dualcore=1`(correct)
@@ -47,43 +44,7 @@ endif::[]
 * The following mods will cause instability:
 - link:https://gamebanana.com/mods/206443[Robot animation fixes (by sigsegv)]
 
-.Executing the following in your console (on community servers) will get you banned by SourceMod plugin "anti-cheats"; even if you don't cheat!
-[%collapsible]
-====
-- 0penscript
-- aim_bot
-- aim_fov
-- bat_version
-- beetlesmod_version
-- caramelldansen
-- cat
-- est_version
-- eventscripts_ver
-- fm_attackmode
-- get
-- hook
-- lithium_disable_party_bypass
-- lua-engine
-- lua_open
-- mani_admin_plugin_version
-- maniadminhacker
-- maniadmintakeover
-- melancholy
-- metamod_version
-- openscript
-- openscript_version
-- rijin_load
-- rijin_save
-- runnscript
-- runscript
-- set
-- SetCursor
-- setcvar
-- smadmintakeover
-- sourcemod_version
-- tb_enabled
-- zb_version
-====
+* Don't execute commands you don't know, it can get you banned on community servers if you execute say "fm_attackmode" (which doesn't exist, but a cheat used it at some point)
 
 == autoexec2.cfg - where you put your custom changes, such as aliases and convars
 * Change Motion Blur
@@ -108,14 +69,10 @@ endif::[]
 * Measures with a profiler (very accurate), instead of FPS/Frames Per Second
 * Config files are easy to read through
 * Bad preferences are blocked off
-* Doesn't change settings based off crackpot theories
-** link:https://youtu.be/QPbiYZao3ls[In other words]: Not using its userbase as testers for changes that were already known as bad
 * Insane loading time reductions (no FPS impact)
 * Less memory usage (no FPS impact)
 
 == Decision making
-TIP: If you can't prove yourself what others say, don't parrot it to others
-
 `bind F1"";bind F2""` +
 "f2" = "show_quest_log" : can break voting no on a player; the same is for F1
 
@@ -202,8 +159,8 @@ While using keyboard look, this convar set to 1 portrays an inaccurate view for 
 Ability to quickly view profiles and mute players; 1 instead of 2 to discourage spamming the scoreboard key (out of habit)
 
 `tf_chat_popup_hold_time 10` +
-Hold out until RijiN's Party Networking feature is active; the lower `tf_chat_popup_hold_time` is, the higher chances of crashing +
-However, 0 is off, which makes party messages stick on main menu forever, but has the least chance of crashing the game
+The lower `tf_chat_popup_hold_time` is, the higher chances of crashing from party chat message spamming +
+0 is off; party messages stay on the main menu forever, but has the least chance of crashing the game
 
 `tf_inspect_hint_count 11` +
 Specifies how many times you've been given the Weapon Inspection Hint, with 11 times turning off the Weapon Inspection Hint
@@ -219,3 +176,6 @@ Fixes inability to go into Fullscreen mode if VR was enabled; this assumes a VR 
 
 What is the point of rimlight? +
 link:https://www.youtube.com/watch?v=C-47CwPYL3w&t=657s[Well Developer Commentary]
+
+`con_filter_enable 1; con_filter_text_out "ad-hoc"` +
+Supresses warnings from using `-hushsteam` launch argument (to hide your IP address if hosting a local server)
