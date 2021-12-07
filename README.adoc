@@ -32,7 +32,11 @@ TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github
 . Go out there and play TF2!
 
 == Extra steps
-. Use link:https://dl.bitsum.com/files/processlassosetup64.exe[Process Lasso] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High
+. Use **`user\options.cfg`** to configure it further
+. Use class configs? Move them to `Team Fortress 2\tf\cfg\class`
+. Play on `sv_pure` servers? Add **`use_no_gibs.vpk`** to `Team Fortress 2\tf\custom` when disabling gibs
+. Use link:https://bitsum.com[Process Lasso] or link:https://processhacker.sourceforge.io/nightly.php[Process Hacker] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High
+. Don't like something about Vusalo? Change it! Add the `zzz_vusalo_base` folder to `Team Fortress 2\tf\custom` to reconfigure it! Then, run **`make_vusalo_base_vpk.bat`**
 
 == Avoid the following
 * Putting spaces in an option, such as `dualcore = 1`(incorrect) instead of `dualcore=1`(correct)
@@ -179,3 +183,9 @@ link:https://www.youtube.com/watch?v=C-47CwPYL3w&t=657s[Well Developer Commentar
 
 `con_filter_enable 1; con_filter_text_out "ad-hoc"` +
 Supresses warnings from using `-hushsteam` launch argument (to hide your IP address if hosting a local server)
+
+== Shoutouts
+* link:https://github.com/high-brow[Myself] because I'm an egoist
+* link:https://github.com/ghost-420[ghost-420] for starting the project
+* link:https://github.com/JarateKing[JarateKing] for being a wizard
+* The link:https://developer.valvesoftware.com/wiki/Main_Page[Valve Developer Community] for their extensive documentation of commands and variables
