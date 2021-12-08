@@ -25,10 +25,9 @@ TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github
 . Replace Launch Options with:
 - `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog -hushsteam`
 - Linux specific additions: `-glslcontrolflow -arbmode`
-. link:https://github.com/ghost-420/vusalo/archive/refs/heads/master.zip[Download Vusalo as a ZIP], then extract that ZIP
-. Place **`vusalo_file_operations.bat`** and **`revert_vusalo_file_operations.bat`** into the root directory of Team Fortress 2 (example: `D:\Steam\steamapps\common\Team Fortress 2`)
-. Place **`zzz_vusalo_base.vpk`** and the `zzzz_vusalo_configuration` folder into `Team Fortress 2\tf\custom`
-. Open **`vusalo_file_operations.bat`** in a text editor, then after configured, run **`vusalo_file_operations.bat`**
+. Go to the link:https://github.com/high-brow/Vusaline/releases[releases section] and grab the newest zip, then extract that zip and make sure all it's contents are in the same folder.
+. Once everything is unzipped, run **`vusalo_setup.bat`** and everything should be installed automatically! If you use a custom TF2 directory, edit the .bat file and copy paste your directory as indicated
+. Go to `Vusalo` in your TF2 directory and run **`vusalo_file_operations.bat`**
 . Go out there and play TF2!
 
 == Extra steps
@@ -183,6 +182,9 @@ link:https://www.youtube.com/watch?v=C-47CwPYL3w&t=657s[Well Developer Commentar
 
 `con_filter_enable 1; con_filter_text_out "ad-hoc"` +
 Supresses warnings from using `-hushsteam` launch argument (to hide your IP address if hosting a local server)
+
+Why Vusaline? +
+Vusaline is a project that aims to continue and improve Vusalo with the intention of adding them to the original. You could think of it as an "experimental" version of Vusalo, however Vusaline also includes a lot of changes that prevent it from going outdated
 
 == Shoutouts
 * link:https://github.com/high-brow[Spookbuster] because I'm an egoist
