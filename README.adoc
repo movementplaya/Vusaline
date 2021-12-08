@@ -27,8 +27,7 @@ TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github
 - Linux specific additions: `-glslcontrolflow -arbmode`
 . Go to the link:https://github.com/high-brow/Vusaline/releases[releases section] and grab the newest zip, then extract that zip and make sure all it's contents are in the same folder.
 . Once everything is unzipped, run **`vusalo_setup.bat`** and everything should be installed automatically! If you use a custom TF2 directory, edit the .bat file and copy paste your directory as indicated
-. Go to `Vusalo` in your TF2 directory and run **`vusalo_file_operations.bat`**
-. Go out there and play TF2!
+. That's it! Go out there and play TF2!
 
 == Extra steps
 . Use **`user\options.cfg`** to configure it further
@@ -121,8 +120,8 @@ Frame limit using RTSS or nVidia's "Max Frame Rate" instead, as they're more con
 
 WARNING: Don't leave the game FPS uncapped while playing normally, memory leaking will occur. However, it's desirable to uncap FPS while profiling
 
-`r_occlusion 0` +
-At 1 (on) = uses more CPU time to alleviate load on the GPU; mostly decreases FPS, and theoretically decreases stability
+`r_occlusion 1` +
+Meant to improve performance by manually selecting which areas to occlude. Performance issues caused by this are due to poor map optimisation and/or hardware.
 
 `cl_pred_optimize 2` +
 Don't trust engine pred to be accurate enough (despite no packet loss), keep re-calculating engine prediction
@@ -188,6 +187,6 @@ Vusaline is a project that aims to continue and improve Vusalo with the intentio
 
 == Shoutouts
 * link:https://github.com/high-brow[Spookbuster] because I'm an egoist
-* link:https://github.com/lazos[lazos] for starting the project
+* link:https://github.com/Iazos[Iazos] for starting the project
 * link:https://github.com/JarateKing[JarateKing] for being a wizard
 * The link:https://developer.valvesoftware.com[Valve Developer Community] for their extensive documentation of commands and variables

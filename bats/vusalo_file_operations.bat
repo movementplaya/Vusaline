@@ -16,8 +16,9 @@ set /A disable_hl2_sounds=0
 :: Gets in the way of playing the game
 set /A disable_map_intros=1
 
+cd ..
 cd tf\cfg
-move /y autoexec.cfg autoexec.cfg.disabled
+move /y autoexec.cfg autoexec2.cfg
 cd ..\..
 
 cd bin
@@ -127,3 +128,4 @@ if %disable_map_intros%==0 (
 	cd ..\tf
 	move /y media media_disabled
 )
+exit 0

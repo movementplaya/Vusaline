@@ -27,12 +27,6 @@ if not exist %tf2dir% (
 		)
 	)
 )
-if not exist %tf2dir%\Vusalo (
-	md %tf2dir%\Vusalo
-)
-if not exist %tf2dir%\tf\custom (
-	md %tf2dir%\tf\custom
-)
 if not exist bats (
 	echo ERROR: COULD NOT FIND VUSALO FILES! PLEASE KEEP THIS BATCH IN THE SAME FOLDER!
 	pause
@@ -56,12 +50,33 @@ if not exist bats (
 		)
 	)
 )
+if exist %tf2dir%\Vusalo (
+	if exist %tf2dir%\Vusalo\make_vusalo_base_vpk.bat (
+		del %tf2dir%\Vusalo\make_vusalo_base_vpk.bat
+	)
+	if exist %tf2dir%\Vusalo\revert_vusalo_file_operations.bat (
+		del %tf2dir%\Vusalo\revert_vusalo_file_operations.bat
+	)
+	if exist %tf2dir%\Vusalo\vusalo_file_operations.bat (
+		del %tf2dir%\Vusalo\vusalo_file_operations.bat
+	)
+) else (
+	md %tf2dir%\Vusalo
+)
+if exist %tf2dir%\tf\custom (
+	if exist %tf2dir%\tf\custom\zzz_vusalo_base.vpk (
+		del %tf2dir%\tf\custom\zzz_vusalo_base.vpk
+	)
+) else (
+	md %tf2dir%\tf\custom
+)
 move /y bats\make_vusalo_base_vpk.bat %tf2dir%\Vusalo
-move /y bats\vusalo_file_operations.bat %tf2dir%\Vusalo
 move /y bats\revert_vusalo_file_operations.bat %tf2dir%\Vusalo
+move /y bats\vusalo_file_operations.bat %tf2dir%\Vusalo
 move /y vpks\vusalo_base.vpk %tf2dir%\tf\custom\zzz_vusalo_base.vpk
 if not exist %tf2dir%\tf\custom\vusalo_configuration (
 	move /y vusalo_configuration %tf2dir%\tf\custom\vusalo_configuration
 )
-pause
+cd %tf2dir%\Vusalo
+start cmd /k call %tf2dir%\Vusalo\vusalo_file_operations.bat
 exit 0
