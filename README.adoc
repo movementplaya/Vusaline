@@ -185,7 +185,7 @@ link:https://www.youtube.com/watch?v=C-47CwPYL3w&t=657s[Well Developer Commentar
 Supresses warnings from using `-hushsteam` launch argument (to hide your IP address if hosting a local server)
 
 == Shoutouts
-* link:https://github.com/high-brow[Myself] because I'm an egoist
-* link:https://github.com/ghost-420[ghost-420] for starting the project
+* link:https://github.com/high-brow[Spookbuster] because I'm an egoist
+* link:https://github.com/lazos[lazos] for starting the project
 * link:https://github.com/JarateKing[JarateKing] for being a wizard
-* The link:https://developer.valvesoftware.com/wiki/Main_Page[Valve Developer Community] for their extensive documentation of commands and variables
+* The link:https://developer.valvesoftware.com[Valve Developer Community] for their extensive documentation of commands and variables
