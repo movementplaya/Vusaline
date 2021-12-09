@@ -1,18 +1,22 @@
 @echo off
 cd ..
-if exist "%cd%\tf\custom" (
-	if exist "%cd%\tf\custom\vusalo_base" (
-		"%cd%\bin\vpk.exe" "%cd%tf\custom\vusalo_base"
-		rd /s /q "%cd%\tf\custom\vusalo_base"
-		move /y "%cd%tf\custom\vusalo_base.vpk" "%cd%\tf\custom\zzz_vusalo_base.vpk"
+:start
+if exist tf\custom (
+	if exist tf\custom\vusalo_base (
+		bin\vpk tf\custom\vusalo_base
+		move /y tf\custom\vusalo_base.vpk tf\custom\zzz_vusalo_base.vpk
+		if not exist tf\custom\zzz_vusalo_base.vpk goto :start
+		rd /s /q tf\custom\vusalo_base
+		echo Operation went through successfully!
+		pause
 		exit 0
 	) else (
-		echo ERROR: vusalo_base doesn't exist! Make sure it's placed in "Team Fortress 2\custom"!
+		echo ERROR: "vusalo_base" doesn't exist! Make sure it's placed in "Team Fortress 2\custom"!
+		pause
 		exit 2
 	)
 ) else (
-	echo ERROR: Custom folder not found/Incorrect directory! Make sure this batch is placed in "Team Fortress 2\Vusalo"!
+	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusalo"!
+	pause
 	exit 3
 )
-echo ERROR: Something went wrong! We aren't supposed to reach this point!
-pause

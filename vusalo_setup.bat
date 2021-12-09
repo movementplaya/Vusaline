@@ -18,7 +18,7 @@ if not exist %tf2dir% (
 					if exist "E:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2" (
 						set tf2dir="E:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2"
 					) else (
-						echo ERROR: COULD NOT FIND TF2 DIRECTORY!
+						echo ERROR: COULD NOT FIND TF2 DIRECTORY! PLEASE EDIT THIS FILE AND PLACE IT AT THE TOP AS INDICATED!
 						pause
 						exit 3
 					)
@@ -27,25 +27,33 @@ if not exist %tf2dir% (
 		)
 	)
 )
-if not exist bats (
-	echo ERROR: COULD NOT FIND VUSALO FILES! PLEASE KEEP THIS BATCH IN THE SAME FOLDER!
+cd ..
+if not exist Vusalo-master (
+	echo ERROR: COULD NOT FIND VUSALO FILES! PLEASE KEEP THIS BATCH FILE IN THE SAME FOLDER!
 	pause
-	exit 2
+	exit 3
 ) else (
-	if not exist vpks (
-		echo ERROR: COULD NOT FIND VUSALO FILES! PLEASE KEEP THIS BATCH IN THE SAME FOLDER!
+	cd Vusalo-master
+	if not exist bats (
+		echo ERROR: COULD NOT FIND VUSALO "bats" FOLDER! PLEASE KEEP THEM IN THE SAME FOLDER!
 		pause
 		exit 2
 	) else (
-		if not exist bats\vusalo_file_operations.bat (
-			echo ERROR: COULD NOT FIND VUSALO BATCH FILE! PLEASE KEEP IT IN THE "Vusalo-master\bats" FOLDER!
+		if not exist vpks (
+			echo ERROR: COULD NOT FIND "vpks" FOLDER! PLEASE KEEP THEM IN THE SAME FOLDER!
 			pause
 			exit 2
 		) else (
-			if not exist vpks\vusalo_base.vpk (
-				echo echo ERROR: COULD NOT FIND VUSALO BASE VPK! PLEASE KEEP IT IN THE "Vusalo-master\vpks" FOLDER!
+			if not exist bats\vusalo_file_operations.bat (
+				echo ERROR: COULD NOT FIND "busalo_file_operations.bat"! PLEASE KEEP IT IN THE "Vusalo-master\bats" FOLDER!
 				pause
 				exit 2
+			) else (
+				if not exist vpks\vusalo_base.vpk (
+					echo echo ERROR: COULD NOT FIND "vusalo_base.vpk"! PLEASE KEEP IT IN THE "Vusalo-master\vpks" FOLDER!
+					pause
+					exit 2
+				)
 			)
 		)
 	)
@@ -81,5 +89,5 @@ move /y vusalo_configuration %tf2dir%\tf\custom\vusalo_configuration
 echo FIRST TIME INSTALL DETECTED
 echo WORKING AS INTENDED
 cd %tf2dir%\Vusalo
-start cmd /k call "%cd%\vusalo_file_operations.bat"
+start cmd /k call vusalo_file_operations.bat"
 exit 0

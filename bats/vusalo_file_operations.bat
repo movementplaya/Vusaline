@@ -16,8 +16,15 @@ set /A disable_hl2_sounds=0
 :: Gets in the way of playing the game
 set /A disable_map_intros=1
 
+@echo off
 cd ..
-cd tf\cfg
+if exist tf (
+	cd tf\cfg
+) else (
+	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusalo"!
+	pause
+	exit 3
+)
 move /y autoexec.cfg autoexec2.cfg
 cd ..\..
 

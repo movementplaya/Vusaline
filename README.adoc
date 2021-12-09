@@ -81,7 +81,7 @@ For RijiN v1 users +
 Remove the `-nobreakpad` launch option. If issues prevail, consider removing `-nosteamcontroller` (not necessary).
 
 "The installer gives me an error!" +
-Reextract **`Vusaline.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If there error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline#setup[setup].
+Reextract **`Vusaline.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If an error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline#setup[setup].
 
 "I don't like how Vusaline does [X]!" +
 Go to `Team Fortress 2\tf\custom\vusalo_configuration\cfg` and edit **`options.cfg`** to your linking. If you can't find what you're looking for there, then add it to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't already). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/decisions.adoc[here]. If you still wish to modify the configs, go to link:https://github.com/high-brow/Vusaline#extra-steps[extra steps] and follow step 5.

@@ -1,6 +1,13 @@
+@echo off
 cd ..
-cd tf\cfg
-move /y autoexec.cfg.disabled autoexec.cfg
+if exist tf (
+	cd tf\cfg
+) else (
+	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusalo"!
+	pause
+	exit 3
+)
+move /y autoexec2.cfg autoexec.cfg
 cd ..\..
 
 cd bin
