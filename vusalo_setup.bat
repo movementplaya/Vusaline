@@ -1,4 +1,4 @@
-:: >>CHANGE THIS IF YOU DON'T USE THE DEFAULT TF2 DIRECTORY (DO *NOT* REMOVE QUOTES)<<
+:: >>CHANGE THIS IF YOU DON'T USE THE DEFAULT TF2 DIRECTORY (DO *NOT* REMOVE QUOTATION MARKS)<<
 set tf2dir="PLACE YOUR TF2 DIRECTORY HERE"
 
 @echo off
@@ -74,9 +74,12 @@ move /y bats\make_vusalo_base_vpk.bat %tf2dir%\Vusalo
 move /y bats\revert_vusalo_file_operations.bat %tf2dir%\Vusalo
 move /y bats\vusalo_file_operations.bat %tf2dir%\Vusalo
 move /y vpks\vusalo_base.vpk %tf2dir%\tf\custom\zzz_vusalo_base.vpk
-if not exist %tf2dir%\tf\custom\vusalo_configuration (
-	move /y vusalo_configuration %tf2dir%\tf\custom\vusalo_configuration
+if exist %tf2dir%\tf\custom\vusalo_configuration (
+	exit 0
 )
+move /y vusalo_configuration %tf2dir%\tf\custom\vusalo_configuration
+echo FIRST TIME INSTALL DETECTED
+echo WORKING AS INTENDED
 cd %tf2dir%\Vusalo
-start cmd /k call %tf2dir%\Vusalo\vusalo_file_operations.bat
+start cmd /k call "%cd%\vusalo_file_operations.bat"
 exit 0

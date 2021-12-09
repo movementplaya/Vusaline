@@ -1,0 +1,107 @@
+Decision making +
+`bind F1"";bind F2""` +
+"f2" = "show_quest_log" : can break voting no on a player; the same is for F1.
+
+`net_maxpacketdrop 5000` +
+Dropping too many packets in a row will break lag compensation, with Valve's default of 5000 packets being the cut-off point; `cl_fullupdate` won't fix lag compensation, a `retry` is needed.
+
+NOTE: The game doesn't do a `cl_fullupdate` if you have packet loss, and also doesn't for class changes; see for yourself with `developer 4;contimes 50` +
+A single `cl_fullupdate` is needed (only at end of connecting to a server), any past that will break lag compensation.
+
+`net_maxcleartime 4.0`
+[source,cpp]
+----
+// If the network connection hasn't been active in this many seconds, display some warning text.
+#define CONNECTION_PROBLEM_TIME		4.0f	// assume network problem after this time.
+----
+`cl_timeout 30` +
+Disconnects after dropping 5000 packets in a row.
+
+`low_fps=0"cl_cmdrate 100;cl_updaterate 66"` +
+If the FPS is below the updaterate often (below 66FPS for 66 updaterate), hit registration accuracy is noticeably reduced. 100 tickrate servers be damned, as 100 tickrate makes no noticeable difference (tested with a good aimbot) in accuracy.
+
+`net_blockmsg 0`
+[source,cpp]
+----
+// From CS:GO
+static ConVar net_blockmsg( "net_blockmsg", "0", FCVAR_CHEAT, "Discards incoming message: <0|1|name>" ); // "none" here is bad, causes superfluous strcmp on every net message.
+----
+
+`tf_scoreboard_ping_as_text 1` +
+Less FPS intensive, and provides more useful information than coloured bars.
+
+No usage of `cmd` +
+Hasn't been reversed to see whether it is helpful.
+
+`net_queued_packet_thread 581304` +
+Less chance of packet rejection (causes prediction errors; hitreg inaccuracy) from the server due to forcefully clumping packets together, instead of sending packets individually on each frame (at 0, but can happen with 1).
+
+`net_splitrate 1` +
+Packet fragmentation optimally is avoided, but whenever needed, this will stop complete network stalls from occuring.
+
+`fps_max 0` +
+Frame limit using RTSS or nVidia's "Max Frame Rate" instead, as they're more consistent.
+
+WARNING: Don't leave the game FPS uncapped while playing normally, memory leaking will occur. However, it's desirable to uncap FPS while profiling.
+
+`r_occlusion 1` +
+Meant to improve performance by manually selecting which areas to occlude. Performance issues caused by this are due to poor map optimisation and/or hardware.
+
+`cl_pred_optimize 2` +
+Don't trust engine pred to be accurate enough (despite no packet loss), keep re-calculating engine prediction.
+
+`mod_dynamicunloadtime 600` +
+Use highest possible wait time to unload unused dynamic models (player cosmetics); good if a player with a specific cosmetic set leaves, then another player joins more than 150 (default) seconds later with that same cosmetic set.
+
+`hud_escort_interp 0.2` +
+Interpolating the Payload Cart HUD element causes it to overshoot in distance, which is helpful in high ping and/or high packet loss situations; value of 0.2 doesn't undershoot for low ping with zero packet loss.
+
+`tf_mm_custom_ping 350;tf_mm_custom_ping_enabled 0` +
+Party System is very sensitive to latency, it'll put you in low ping servers regardless.
+
+`rate 1048576` +
+Artifical network delays don't fix the central issue(s) with packet loss; `loss_severity` was added to change how packets are sent & received in the first place to lessen packet loss impact.
+
+`m_mousespeed 0;alias m_mousespeed""` +
+Use only https://github.com/a1xd/rawaccel for mouse acceleration!
+
+`mat_forcehardwaresync 1;alias mat_forcehardwaresync` +
+Other game engines sync the CPU and GPU frames closely (such as UE4), which will reduce input latency/lag (more noticeable at low FPS).
+
+`w10_mouse=1"m_limitedcapture_workaround 1"` +
+Less CPU time spent on Input (less FPS drop during mouse movement) for Windows 10 in Fullscreen mode.
+
+`m_rawinput 1` +
+Read the thread content and posts link:https://www.mouse-sensitivity.com/updates/updates/csgo-m_rawinput-vs-rinput-r149[here].
+
+**`tr_walkway_fix.cfg`** +
+Local servers are always inaccurate; SRCDS is always accurate, even if hosted on the PC you're running TF2 from.
+Despite this, a single **required** convar change for this map is included for convenience.
+
+`in_usekeyboardsampletime 0` +
+While using keyboard look, this convar set to 1 portrays an inaccurate view for +left & +right, and makes key inputs noticeably delayed.
+
+`tf_scoreboard_mouse_mode 1` +
+Ability to quickly view profiles and mute players; 1 instead of 2 to prevent bugs caused by it and to discourage spamming the scoreboard key.
+
+`tf_chat_popup_hold_time 10` +
+The lower `tf_chat_popup_hold_time` is, the higher chances of crashing from party chat message spamming +
+0 is off; party messages stay on the main menu forever, but has the least chance of crashing the game.
+
+`tf_inspect_hint_count 11` +
+Specifies how many times you've been given the Weapon Inspection Hint, with 11 times turning off the Weapon Inspection Hint.
+
+Not using `-r_emulate_gl` +
+Tells the game that ToGL is being used (when it isn't); includes hacks that reduce FPS for both OpenGL and DirectX.
+
+`-disable_d3d9_hacks` +
+If some or all of TF2's DirectX9 hacks still apply for the latest graphical drivers of GPUs still supported by Windows 10, that could potentially cause bugs seemingly no-one else has, and decrease FPS.
+
+`alias vr_support=0"mat_vrmode_adapter -1"` +
+Fixes inability to go into Fullscreen mode if VR was enabled; this assumes a VR headset isn't used anymore for TF2, as that's the bug it fixes.
+
+What is the point of rimlight? +
+link:https://www.youtube.com/watch?v=C-47CwPYL3w&t=657s[Well Developer Commentary].
+
+`con_filter_enable 1; con_filter_text_out "ad-hoc"` +
+Supresses warnings from using `-hushsteam` launch argument (to hide your IP address if hosting a local server).
