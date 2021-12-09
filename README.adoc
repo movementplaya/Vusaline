@@ -28,7 +28,7 @@ TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github
 . That's it! Go out there and play TF2!
 
 == Extra steps
-. Use **`user\options.cfg`** to configure it further.
+. Use **`user\options.cfg`** to configure Vusaline.
 . Use class configs? Move them to `Team Fortress 2\tf\cfg\class`.
 . Use a custom autoexec? You can find it as autoexec2.cfg. If you haven't, you can create it to make aliases and change cvars like:
 * Change Motion Blur:
@@ -43,12 +43,11 @@ TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github
 * If in need of more FPS, set the following for GPUs with a "G3D Mark" of <=1365:
 - Turn off anisotropic filtering for textures (makes textures low-res looking & ugly)
 - `mat_forceaniso 1`
-. Play on `sv_pure` servers? Add **`use_no_gibs.vpk`** to `Team Fortress 2\tf\custom` when disabling gibs.
-. Use link:https://bitsum.com[Process Lasso] or link:https://processhacker.sourceforge.io/nightly.php[Process Hacker] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High.
+. Instead of using `-high`, use link:https://bitsum.com[Process Lasso] or link:https://processhacker.sourceforge.io/nightly.php[Process Hacker] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High.
 . Don't like something about Vusalo? Change it! Unpack **`vusalo_base.7z`** and place it in `Team Fortress 2\tf\custom` to reconfigure it! Once you're done, run **`make_vusalo_base_vpk.bat`** in `Team Fortress 2\Vusalo`.
 
 == Avoid the following
-* Putting spaces in an option, such as `dualcore = 1`(incorrect) instead of `dualcore=1`(correct).
+* Putting spaces in **`options.cfg`**, such as `dualcore = 1`(incorrect) instead of `dualcore=1`(correct).
 * Using transparent viewmodel support in your HUD:
 - Potential to mess with world props: https://youtu.be/fg5eBkmVS1c
 - Adds another HUD animation, which will impact frametimes.
@@ -64,29 +63,30 @@ Vusalo is a (somewhat subjectivised) performance enhancer for TF2 that's based a
 Why Vusaline? +
 I started Vusaline with the intention to continue and improve Iazos' Vusalo. You could think of it as an "experimental" version of Vusalo, however Vusaline also includes a lot of changes that maintain it up-to-date with the current versions of TF2.
 
-How does this compare to other configs? +
-* Focused on game stability, CPU time reduction, and stable/smooth frametimes.
-* Measures with a profiler (very accurate), instead of FPS/Frames Per Second.
-* Config files are easy to read through.
-* Bad preferences are blocked off.
-* Insane loading time reductions (no FPS impact).
-* Less memory usage (no FPS impact).
+How does Vusalo compare to other configs? +
+. It's focused on game stability, CPU time reduction, and stable/smooth frametimes.
+. Measures/benchmarks are taken with a profiler (very accurate), instead of FPS/Frames Per Second.
+. Config files are easy to read through.
+. Bad preferences are blocked off.
+. Massive improvements to loading times (no FPS impact).
+. Reduced memory usage (no FPS impact).
 
 Decision making +
-You can find how many of Vusalo's/Vusaline's decisions were taken link:https://github.com/high-brow/Vusaline/blob/master/decisions.adoc[here].
+You can find how many of Vusalo/Vusaline's decisions were taken link:https://github.com/high-brow/Vusaline/blob/master/decisions.adoc[here].
 
 For VR users +
 Go to `Team Fortress 2\Vusalo` and edit **`vusalo_file_operations.bat`**. On the 9th line, you should find `block_vr=1`; set it to `block_vr=0`. Then, run **`revert_vusalo_file_operations.bat`** and **`vusalo_file_operations`** afterwards.
 
 For RijiN v1 users +
 Remove the `-nobreakpad` launch option. If issues prevail, consider removing `-nosteamcontroller` (not necessary).
+
 "The installer gives me an error!" +
-Reextract **`Vusalo-master.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If there error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline#setup[Setup].
+Reextract **`Vusalo-master.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If there error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline#setup[setup].
 
-"I don't like how Vusaline does [x]!" +
-Go to `Team Fortress 2\tf\custom\vusalo_configuration\cfg` and edit **`options.cfg`** to your linking. If you can't find what you're looking for there, then add it to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't already). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/decisions.adoc[here]. If you still wish to modify the configs, go to link:https://github.com/high-brow/Vusaline#extra-steps[Extra steps] and follow step 6.
+"I don't like how Vusaline does [X]!" +
+Go to `Team Fortress 2\tf\custom\vusalo_configuration\cfg` and edit **`options.cfg`** to your linking. If you can't find what you're looking for there, then add it to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't already). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/decisions.adoc[here]. If you still wish to modify the configs, go to link:https://github.com/high-brow/Vusaline#extra-steps[xtra steps] and follow step 5.
 
-"I want to uninstall this crap!" =
+"I want to uninstall this crap!" +
 Simply follow link:https://github.com/high-brow/Vusaline#used-custom-configs-previously[these] steps!
 
 == Shoutouts

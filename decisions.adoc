@@ -1,4 +1,4 @@
-Decision making +
+== Decision making
 `bind F1"";bind F2""` +
 "f2" = "show_quest_log" : can break voting no on a player; the same is for F1.
 
