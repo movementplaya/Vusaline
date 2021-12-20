@@ -28,12 +28,12 @@ if not exist %tf2dir% (
 	)
 )
 cd ..
-if not exist Vusalo-master (
+if not exist Vusaline (
 	echo ERROR: COULD NOT FIND VUSALO FILES! PLEASE KEEP THIS BATCH FILE IN THE SAME FOLDER!
 	pause
 	exit 3
 ) else (
-	cd Vusalo-master
+	cd Vusaline
 	if not exist bats (
 		echo ERROR: COULD NOT FIND VUSALO "bats" FOLDER! PLEASE KEEP THEM IN THE SAME FOLDER!
 		pause
@@ -45,12 +45,12 @@ if not exist Vusalo-master (
 			exit 2
 		) else (
 			if not exist bats\vusalo_file_operations.bat (
-				echo ERROR: COULD NOT FIND "busalo_file_operations.bat"! PLEASE KEEP IT IN THE "Vusalo-master\bats" FOLDER!
+				echo ERROR: COULD NOT FIND "vusalo_file_operations.bat"! PLEASE KEEP IT IN THE "Vusaline\bats" FOLDER!
 				pause
 				exit 2
 			) else (
 				if not exist vpks\vusalo_base.vpk (
-					echo echo ERROR: COULD NOT FIND "vusalo_base.vpk"! PLEASE KEEP IT IN THE "Vusalo-master\vpks" FOLDER!
+					echo echo ERROR: COULD NOT FIND "vusalo_base.vpk"! PLEASE KEEP IT IN THE "Vusaline\vpks" FOLDER!
 					pause
 					exit 2
 				)
