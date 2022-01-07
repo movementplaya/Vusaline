@@ -1,0 +1,54 @@
+:experimental:
+:imagesdir: imgs/
+:experimental:
+ifdef::env-github[]
+:icons:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+== Removing other configs
+. Steam -> Library -> Team Fortress 2 -> Uncheck/disable "Keep games saves in the Steam Cloud for Team Fortress 2".
+. Local Files -> Browse... 
+. From there, go to `tf\custom` and search for `.cfg` files; then, check their contents, and move or remove those (.cfg) files accordingly.
+. Go to `tf\cfg` and delete **`config.cfg`**.
+
+== Setup
+. Replace launch options with:
+- `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog -hushsteam`.
+- Linux specific additions: `-glslcontrolflow -arbmode`.
+. Go to the link:https://github.com/high-brow/Vusaline/releases[releases section] and grab the newest zip.
+. Open the zip and run **'vusaline_installer.exe'**; change the prompted directory if incorrect.
+. That's it! Go out there and play TF2!
+
+== Extra steps
+. Use **`Team Fortress 2\tf\custom\zzz_vusaline_base\options.cfg`** to configure Vusaline.
+. Use class configs? Move them to `Team Fortress 2\tf\cfg\class`.
+. Use a custom autoexec? You can find it as autoexec2.cfg. If you haven't, you can create it to make aliases and change cvars like:
+* Change Motion Blur:
+- `mat_motion_blur_enabled 1` then mess with `mat_motion_blur_strength`
+* Change contrast for fullscreen mode (only):
+- `mat_monitorgamma`
+- Allowed range: From `1.6` up to `2.6`
+* Adjust Killfeed time (in seconds):
+- `hud_deathnotice_time`
+* Adjust Killstreak feed time (in seconds):
+- `cl_hud_killstreak_display_time`
+* If in need of more FPS, set the following for GPUs with a "G3D Mark" of <=1365:
+- Turn off anisotropic filtering for textures (makes textures low-res looking & ugly)
+- `mat_forceaniso 1`
+. Instead of using `-high`, use link:https://bitsum.com[Process Lasso] or link:https://processhacker.sourceforge.io/nightly.php[Process Hacker] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High.
+. Don't like something about Vusaline? Change it! link:https://github.com/high-brow/Vusaline/raw/master/vusaline_base.7z[Download the base] and change what you like! Then place the **`zzz_vusaline_base`** folder in `Team Fortress 2\tf\custom` and run **`make_base_vpk.bat`** in `Team Fortress 2\Vusaline`.
+
+== Avoid the following
+* Putting spaces in **`options.cfg`**, such as `dualcore = 1`(incorrect) instead of `dualcore=1`(correct).
+* Using transparent viewmodel support in your HUD:
+- Potential to mess with world props: https://youtu.be/fg5eBkmVS1c
+- Adds another HUD animation, which will impact frametimes.
+* Using `block_crash_reporting=0` without removing the `-nobreakpad` launch option.
+* The following mods will cause instability:
+- link:https://gamebanana.com/mods/206443[Robot animation fixes (by sigsegv)].
+* Don't execute commands you don't know! It can get you banned on community servers if you execute say "fm_attackmode" (which doesn't exist, but a cheat used it at some point).
