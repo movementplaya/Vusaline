@@ -41,7 +41,7 @@ endif::[]
 - Turn off anisotropic filtering for textures (makes textures low-res looking & ugly)
 - `mat_forceaniso 1`
 . Instead of using `-high`, use link:https://bitsum.com[Process Lasso] or link:https://processhacker.sourceforge.io/nightly.php[Process Hacker] to set hl2.exe's affinity to always exclude CPU 0 (if you only see 4 checkboxes, avoid this), and hl2.exe's priority to High.
-. Don't like something about Vusaline? Change it! link:https://github.com/high-brow/Vusaline/archive/refs/heads/master.zip[Download the source code] and change what you like! Then place the **`zzz_vusaline_base`** folder in `Team Fortress 2\tf\custom` and run **`make_base_vpk.bat`** in `Team Fortress 2\Vusaline`.
+. Don't like something about Vusaline? Change it! link:https://github.com/high-brow/Vusaline/raw/master/vusaline_base.7z[Download the base] and change what you like! Then place the **`zzz_vusaline_base`** folder in `Team Fortress 2\tf\custom` and run **`make_base_vpk.bat`** in `Team Fortress 2\Vusaline`.
 
 == Avoid the following
 * Putting spaces in **`options.cfg`**, such as `dualcore = 1`(incorrect) instead of `dualcore=1`(correct).
