@@ -11,6 +11,7 @@ endif::[]
 TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github.com/Joshua-Ashton/dxvk-native[dxvk-native] instead of ToGL).
 
 To download and install Vusaline, follow the link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc[installation guide].
+
 == About/FAQ
 What is Vusalo? +
 Vusalo is a (somewhat subjectivised) performance enhancer for TF2 that's based around improving stability, originally created by Iazos.
@@ -33,10 +34,10 @@ For VR users +
 Go to `Team Fortress 2\Vusaline` and edit **`file_operations.bat`**. On the 9th line, you should find `block_vr=1`; set it to `block_vr=0`. Then, run **`revert_file_operations.bat`** and **`file_operations`** afterwards.
 
 "The installer gives me an error!" +
-Reextract **`Vusaline.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If an error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline/installation_guide.adoc#setup[setup].
+Reextract **`Vusaline.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If an error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc#setup[setup].
 
 "I don't like how Vusaline does [X]!" +
-Go to `Team Fortress 2\tf\custom\vusaline_configuration\cfg` and edit **`options.cfg`** to your linking. If you can't find what you're looking for there, then add it to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't already). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/decision_making.adoc[here]. If you still wish to modify the configs, go to link:https://github.com/high-brow/Vusaline/blob/master/installation_guide#extra-steps.adoc[extra steps] and follow the last step.
+Go to `Team Fortress 2\tf\custom\vusaline_configuration\cfg` and edit **`options.cfg`** to your linking. If you can't find what you're looking for there, then add it to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't already). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/decision_making.adoc[here]. If you still wish to modify the configs, go to link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc#extra-steps[extra steps] and follow the last step.
 
 "I want to uninstall this crap!" +
 Simply go to `Team Fortress 2\Vusaline` and run **`unins000.exe`**.
@@ -46,4 +47,5 @@ Simply go to `Team Fortress 2\Vusaline` and run **`unins000.exe`**.
 * link:https://github.com/nermur[nermur] for starting the original project (Vusalo).
 * link:https://github.com/JarateKing[JarateKing] for being a wizard.
 * The link:https://developer.valvesoftware.com[Valve Developer Community] for their extensive documentation of commands and variables.
+* link:https://jrsoftware.org[Jordan Rusesell] for Inno Setup.
 * Everyone who helped with testing and support!

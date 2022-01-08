@@ -18,6 +18,7 @@ AppUpdatesURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppVersion={#MyAppVersion}
 CloseApplicationsFilter=*.dll,*.cfg,*.vpk
+DirExistsWarning=no
 UninstallDisplayName=vusaline_uninstall
 UninstallFilesDir={app}\Vusaline
 SetupIconFile=dur.ico
