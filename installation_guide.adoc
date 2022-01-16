@@ -11,11 +11,7 @@ ifdef::env-github[]
 endif::[]
 
 == Removing other configs
-. Steam -> Library -> Team Fortress 2 -> Uncheck/disable "Keep games saves in the Steam Cloud for Team Fortress 2".
-. Local Files -> Browse... 
-. From there, go to `tf\custom` and search for `.cfg` files; then, check their contents, and move or remove those (.cfg) files accordingly.
-. Go to `tf\cfg` and delete **`config.cfg`**.
-
+. Follow link:https://docs.mastercomfig.com/latest/setup/clean_up/[these] instructions if you've used other configs previously. Make sure to back up your binds settings!
 == Setup
 . Replace launch options with:
 - `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog -hushsteam`.

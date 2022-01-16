@@ -42,6 +42,7 @@ var
 	TF2Path: String;
 	SteamPath: String;
 	UsingSteamDir: Boolean;
+	DirChanged: Boolean;
 function GetTF2Path(Default: String): String;
 begin
 	if not RegQueryStringValue(HKEY_CLASSES_ROOT,'Valve.Source\shell\open\command','',TF2Path) 
@@ -59,8 +60,9 @@ procedure CurPageChanged(CurPageID: Integer);
 begin                                                                                                                                                                                                 
 	if CurPageID = wpSelectDir
 	then begin
-		if not UsingSteamDir
+		if not UsingSteamDir and not DirChanged
 		then begin
+			DirChanged:= True;
 			Delete(TF2Path,1,1);
 			Delete(TF2Path,Length(TF2Path)-13,14);
 		end;

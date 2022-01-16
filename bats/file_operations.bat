@@ -18,15 +18,17 @@ set /A disable_map_intros=1
 
 @echo off
 cd ..
-if exist tf (
-	cd tf\cfg
-) else (
+if not exist tf (
 	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusalo"!
 	pause
 	exit 3
 )
-move /y autoexec.cfg autoexec2.cfg
-cd ..\..
+if exist tf\cfg\user\autoexec.cfg (
+	move /y tf\cfg\user\autoexec.cfg tf\cfg\autoexec2.cfg
+) else (
+	move /y tf\cfg\autoexec.cfg tf\cfg\autoexec2.cfg
+)
+rd /s /q tf\cfg\user
 
 cd bin
 move /y bugreporter.dll bugreporter.dll.disabled
