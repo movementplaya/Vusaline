@@ -1,8 +1,19 @@
+:experimental:
+:imagesdir: imgs/
+ifdef::env-github[]
+:icons:
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 holy fuck i love running 12 bat files that i have to strategically place on my c drive just to get the same outcome as I could by dragging a fucking folder somewhere thank you high0brow for making the EASIEST installation method possible holy fuck it FUCKING SUCKS
 
-how to install (very complicated!!!)
-1. drag ALL contents froom the /install/ folder into your /Team Fortress 2/ folder... (SUPER COMPLLEXS I KNOW!!!)
-2. navigate to /Team Fortress 2/Vusalo/ to customise & run vusalo_file_operations.bat (SUPPPPPEER HARD!!!)
-3. navigate to /Team Fortress 2/tf/custom/vusalo_configuration/cfg/user/ and edit the options that you want to edit;;
-4. set your launch options to `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog -hushsteam` like a little faggot
-5. launch tf2
+== how to install (very complicated!!!)
+. drag ALL contents froom the /install/ folder into your /Team Fortress 2/ folder... (SUPER COMPLLEXS I KNOW!!!)  
+. navigate to /Team Fortress 2/Vusalo/ to customise & run vusalo_file_operations.bat (SUPPPPPEER HARD!!!)  
+. navigate to /Team Fortress 2/tf/custom/vusalo_configuration/cfg/user/ and edit the options that you want to edit;;  
+. set your launch options to `-novid -nodns -nostartupsound -nohltv -nojoy -nobreakpad -nosteamcontroller -noquicktime -precachefontintlchars -disable_d3d9_hacks -nomaster -nowatchdog -nocrashdialog -hushsteam` like a little faggot  
+. launch tf2  
