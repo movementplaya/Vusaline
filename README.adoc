@@ -47,5 +47,5 @@ Simply go to `Team Fortress 2\Vusaline` and run **`unins000.exe`**.
 * link:https://github.com/nermur[nermur] for starting the original project (Vusalo).
 * link:https://github.com/JarateKing[JarateKing] for being a wizard.
 * The link:https://developer.valvesoftware.com[Valve Developer Community] for their extensive documentation of commands and variables.
-* link:https://jrsoftware.org[Jordan Rusesell] for Inno Setup.
+* link:https://jrsoftware.org[Jordan Rusell] for Inno Setup.
 * Everyone who helped with testing and support!
