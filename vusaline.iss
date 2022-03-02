@@ -4,6 +4,7 @@
 #define MyAppURL "https://github.com/high-brow/Vusaline"
 
 [Setup]
+ArchitecturesInstallIn64BitMode=x64
 Compression=lzma
 DefaultDirName={code:GetTF2Path}
 Output=yes
@@ -11,7 +12,7 @@ OutputBaseFilename=vusaline_installer
 OutputDir=.
 SolidCompression=yes
 
-AppId={{53454E44-2048-454C-5020504C45415345}}
+AppId={{53454E44-2048-454C-5020504C45415345}
 AppName={#MyAppName}
 AppPublisher={#MyAppPublisher}
 AppUpdatesURL={#MyAppURL}
@@ -41,30 +42,21 @@ Filename: "{app}\Vusaline\revert_file_operations.bat"; Flags: runhidden;
 var
 	TF2Path: String;
 	SteamPath: String;
-	UsingSteamDir: Boolean;
-	DirChanged: Boolean;
 function GetTF2Path(Default: String): String;
 begin
-	if not RegQueryStringValue(HKEY_CLASSES_ROOT,'Valve.Source\shell\open\command','',TF2Path) 
+
+	if not RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440','InstallLocation',TF2Path) 
 	then
 		if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\WOW6432Node\Valve\Steam','InstallPath',SteamPath) or RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Valve\Steam','InstallPath',SteamPath) and DirExists(SteamPath)
 		then begin
 			TF2Path:= SteamPath;
 			Insert('\steamapps\common\Team Fortress 2',TF2Path,Length(TF2Path)+1);
-			UsingSteamDir:= True;
 		end;
 	Result:= TF2Path; 
 end;
 procedure CurPageChanged(CurPageID: Integer);
 begin                                                                                                                                                                                                 
 	if CurPageID = wpSelectDir
-	then begin
-		if not UsingSteamDir and not DirChanged
-		then begin
-			DirChanged:= True;
-			Delete(TF2Path,1,1);
-			Delete(TF2Path,Length(TF2Path)-13,14);
-		end;
+	then
 		WizardForm.DirEdit.Text:= TF2Path;
-	end;
 end;
