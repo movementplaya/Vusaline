@@ -45,14 +45,14 @@ var
 	DirChanged: Boolean;
 function GetTF2Path(Default: String): String;
 begin
-	if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440','InstallLocation',TF2Path) 
+	if not RegQueryStringValue(HKEY_CLASSES_ROOT,'Valve.Source\shell\open\command','',TF2Path) 
 	then
-		//if RegQueryStringValue(HKEY_LOCAL_MACHINE,'','InstallPath',SteamPath) or RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Valve\Steam','InstallPath',SteamPath) and DirExists(SteamPath)
-		//then begin
-			//TF2Path:= SteamPath;
-			//Insert('\steamapps\coc\Team Fortress 2',TF2Path,Length(TF2Path)+1);
-			//UsingSteamDir:= True;
-		//end;
+		if RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\WOW6432Node\Valve\Steam','InstallPath',SteamPath) or RegQueryStringValue(HKEY_LOCAL_MACHINE,'SOFTWARE\Valve\Steam','InstallPath',SteamPath) and DirExists(SteamPath)
+		then begin
+			TF2Path:= SteamPath;
+			Insert('\steamapps\common\Team Fortress 2',TF2Path,Length(TF2Path)+1);
+			UsingSteamDir:= True;
+		end;
 	Result:= TF2Path; 
 end;
 procedure CurPageChanged(CurPageID: Integer);
@@ -62,6 +62,8 @@ begin
 		if not UsingSteamDir and not DirChanged
 		then begin
 			DirChanged:= True;
+			Delete(TF2Path,1,1);
+			Delete(TF2Path,Length(TF2Path)-13,14);
 		end;
 		WizardForm.DirEdit.Text:= TF2Path;
 	end;
