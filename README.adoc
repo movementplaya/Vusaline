@@ -8,7 +8,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-TIP: Windows focused, also supports Linux (Wine only; until Valve uses link:https://github.com/Joshua-Ashton/dxvk-native[dxvk-native] instead of ToGL).
+TIP: Supports Windows and Linux (Wine only; until Valve uses link:https://github.com/Joshua-Ashton/dxvk-native[dxvk-native] instead of ToGL).
 
 To download and install Vusaline, follow the link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc[installation guide].
 
