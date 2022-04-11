@@ -8,6 +8,7 @@ if exist tf (
 	exit 3
 )
 move /y autoexec2.cfg autoexec.cfg
+color 3
 cd ..\..
 
 cd bin

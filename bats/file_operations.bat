@@ -17,6 +17,7 @@ set /A disable_hl2_sounds=0
 set /A disable_map_intros=1
 
 @echo off
+color 3
 cd ..
 if not exist tf (
 	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusalo"!

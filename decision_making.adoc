@@ -9,8 +9,6 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-==Installation guide
-Installing and setting up Vusaline is very easy! Simply follow the steps as indicated in 
 == Decision making
 `bind F1"";bind F2""` +
 "f2" = "show_quest_log" : can break voting no on a player; the same is for F1.
@@ -27,8 +25,8 @@ A single `cl_fullupdate` is needed (only at end of connecting to a server), any 
 // If the network connection hasn't been active in this many seconds, display some warning text.
 #define CONNECTION_PROBLEM_TIME		4.0f	// assume network problem after this time.
 ----
-`cl_timeout 30` +
-Disconnects after dropping 5000 packets in a row.
+`cl_timeout 45` +
+Disconnects after dropping 7500 packets in a row, mitigates certain DDoS attacks.
 
 `low_fps=0"cl_cmdrate 100;cl_updaterate 66"` +
 If the FPS is below the updaterate often (below 66FPS for 66 updaterate), hit registration accuracy is noticeably reduced. 100 tickrate servers be damned, as 100 tickrate makes no noticeable difference (tested with a good aimbot) in accuracy.
