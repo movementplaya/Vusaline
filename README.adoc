@@ -20,11 +20,17 @@ Why Vusaline? +
 I started Vusaline with the intention to continue and improve the original Vusalo. You could think of it as an "experimental" version of Vusalo, however Vusaline also includes a lot of changes that maintain it up-to-date with the current versions of TF2.
 
 How does Vusaline compare to other configs? +
+
 - It's focused on game stability, CPU time reduction, and stable/smooth frametimes.
+
 - Measures/benchmarks are taken with a profiler (very accurate), instead of FPS/Frames Per Second.
+
 - Config files are easy to read through.
+
 - Bad preferences are blocked off.
+
 - Massive improvements to loading times (no FPS impact).
+
 - Reduced memory usage (no FPS impact).
 
 Decision making +
