@@ -10,11 +10,11 @@ endif::[]
 
 TIP: Windows focused, also supports Linux (Wine only; until Valve uses link:https://github.com/Joshua-Ashton/dxvk-native[dxvk-native] instead of ToGL).
 
-To download and install Vusaline, follow the link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc[installation guide].
+To download and install Vusaline, follow the link:https://github.com/high-brow/Vusaline/blob/master/docs/installation_guide.adoc[installation guide].
 
 == About/FAQ
 What is Vusalo? +
-Vusalo is a (somewhat subjectivised) performance enhancer for TF2 that's based around improving stability, originally created by Iazos.
+Vusalo is a (somewhat subjectivised) performance enhancer for TF2 that's based around improving stability, originally created by nermur.
 
 Why Vusaline? +
 I started Vusaline with the intention to continue and improve the original Vusalo. You could think of it as an "experimental" version of Vusalo, however Vusaline also includes a lot of changes that maintain it up-to-date with the current versions of TF2.
@@ -34,24 +34,23 @@ How does Vusaline compare to other configs? +
 - Reduced memory usage (no FPS impact).
 
 Decision making +
-You can find how many of Vusalo/Vusaline's decisions were taken link:https://github.com/high-brow/Vusaline/blob/master/decision_making.adoc[here].
-
-For VR users +
-Go to `Team Fortress 2\Vusaline` and edit **`file_operations.bat`**. On the 9th line, you should find `block_vr=1`; set it to `block_vr=0`. Then, run **`revert_file_operations.bat`** and **`file_operations`** afterwards.
+You can find how many of Vusalo/Vusaline's decisions were taken link:https://github.com/high-brow/Vusaline/blob/master/docs/decision_making.adoc[here].
 
 "The installer gives me an error!" +
-Reextract **`Vusaline.zip`** and make sure all the extracted files are "as is" in the same folder (`Vusalo-master`). If an error persists, then this is most likely due to you having a custom TF2 install directory. Edit the batch file as described in step 3 of link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc#setup[setup].
+Reextract **`Vusaline.zip`** and double-check the install directory.
 
 "I don't like how Vusaline does [X]!" +
-Go to `Team Fortress 2\tf\custom\vusaline_configuration\cfg` and edit **`options.cfg`** to your linking. If you can't find what you're looking for there, then add it to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't already). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/decision_making.adoc[here]. If you still wish to modify the configs, go to link:https://github.com/high-brow/Vusaline/blob/master/installation_guide.adoc#extra-steps[extra steps] and follow the last step.
+Re-run the installer and configure the settings to your liking. If you can't find what you're looking for there, you can add custom commands and cvars to **`autoexec2.cfg`** located in `Team Fortress 2\tf\cfg` (create it if it isn't there). If you're still unable to change what it is you want, then this is most likely a design choice. To learn more, please go link:https://github.com/high-brow/Vusaline/blob/master/docs/decision_making.adoc[here].
 
 "I want to uninstall this crap!" +
-Simply go to `Team Fortress 2\Vusaline` and run **`unins000.exe`**.
+Go to `Team Fortress 2\Vusaline` and run **`unins000.exe`**.
 
 == Credits
-* link:https://github.com/high-brow[Spookbuster] cause why not.
 * link:https://github.com/nermur[nermur] for starting the original project (Vusalo).
-* link:https://github.com/JarateKing[JarateKing] for being a wizard.
+* link:https://github.com/gamingamerman[gamingamerman] for amazing support.
+* link:https://github.com/high-brow[Spookbuster] cause why not.
+* The link:https://stackoverflow.com[Stack Overflow Community] for helping people like me not go completely insane.
 * The link:https://developer.valvesoftware.com[Valve Developer Community] for their extensive documentation of commands and variables.
+* link:https://github.com/JarateKing[JarateKing] for being a wizard.
 * link:https://jrsoftware.org[Jordan Rusell] for Inno Setup.
-* Everyone who helped with testing and support!
+* Everyone who helped with testing and support! (Seriously, thanks).
