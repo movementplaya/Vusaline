@@ -1,5 +1,5 @@
 #define MyAppName "Vusaline"
-#define MyAppVersion "2022-06-23"
+#define MyAppVersion "2022-06-27"
 #define MyAppPublisher "Spookbuster"
 #define MyAppURL "https://github.com/high-brow/Vusaline"
 
