@@ -20,7 +20,7 @@ set /A disable_map_intros=1
 color 3
 cd ..
 if not exist tf (
-	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusalo"!
+	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusaline"!
 	pause
 	exit 3
 )
