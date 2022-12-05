@@ -1,5 +1,5 @@
 #define MyAppName "Vusaline"
-#define MyAppVersion "2022-06-27"
+#define MyAppVersion "2022-12-05"
 #define MyAppPublisher "Spookbuster"
 #define MyAppURL "https://github.com/high-brow/Vusaline"
 
@@ -37,21 +37,22 @@ Source: "cfgs\*"; DestDir: "{app}\tf\custom\vusaline_configuration\cfg"; Flags: 
 Source: "vpks\*"; DestDir: "{app}\tf\custom"; Flags: ignoreversion
 
 [Run]
-Filename: "{app}\Vusaline\file_operations.bat"; Flags: postinstall runhidden
+Filename: "{app}\Vusaline\file_operations.bat"; Flags: postinstall runhidden; BeforeInstall: SaveBatchSettings
 
 [UninstallRun]
 Filename: "{app}\Vusaline\revert_file_operations.bat"; Flags: runhidden
 
 [Code]
+//Welcome to hell
 var
-	cfgAnsiStr: AnsiString;
-	cfgStr, TF2Path, cvar : String;
-	curWidthA, curHeightA, curWidthB, curHeightB, curWidthC, curHeightC : Integer;
+	cfgAnsiStr, batAnsiStr: AnsiString;
+	cfgStr, batStr, TF2Path, cvar : String;
+	curWidthA, curHeightA, curWidthB, curHeightB, curWidthC, curHeightC, curHeightZ : Integer;
 	cb: TNewComboBox;
-	tb: TEdit;
+	tb: TNewEdit;
+	chb: TNewCheckBox;
 	BackgroundBmp: TBitmapImage;
 	SettingsPageA, SettingsPageB, SettingsPageC : TWizardPage;
-
 procedure LoadVCLStyle(VClStyleFile: String); external 'LoadVCLStyleW@files:VclStylesInno.dll stdcall delayload setuponly';
 procedure LoadVCLStyle_UnInstall(VClStyleFile: String); external 'LoadVCLStyleW@{tmp}\VclStylesInno.dll stdcall delayload uninstallonly';
 procedure UnLoadVCLStyles; external 'UnLoadVCLStyles@files:VclStylesInno.dll stdcall delayload setuponly';
@@ -59,7 +60,7 @@ procedure UnLoadVCLStyles_UnInstall; external 'UnLoadVCLStyles@{tmp}\VclStylesIn
 
 function GetTF2Path(Parameter: String): String;
 begin
-	if not RegQueryStringValue(HKLM, ExpandConstant('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#emit SetupSetting("AppId")}_is1'), 'InstallLocation', TF2Path) then
+	if not RegQueryStringValue(HKLM, ExpandConstant('SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\#emit SetupSetting("AppId")}_is1'), 'InstallLocation', TF2Path) then
 	begin
 		if not RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 440', 'InstallLocation', TF2Path) then
 		begin
@@ -68,7 +69,6 @@ begin
 				Insert('\steamapps\common\Team Fortress 2', TF2Path, Length(TF2Path) + 1);
 			end;
 		end;
-		
 	end;
 	Result:= TF2Path;
 end;
@@ -201,18 +201,7 @@ begin
 			end;
 		end;
 	end;
-	cb.ItemIndex:= StrToInt(
-		Copy(
-			cfgStr,
-			Pos(
-				cvar,
-				cfgStr
-			) + Length(
-				cvar
-			) + 1,
-			1
-		)
-	)
+	cb.ItemIndex:= StrToInt(Copy(cfgStr, Pos(cvar,cfgStr) + Length(cvar) + 1, 1));
 	cb.OnChange:= @DropDownChange;
 end;
 
@@ -261,9 +250,10 @@ begin
 			cfgStr
 		) - 1
 	);
+	Log(cfgStr);
 end;
 
-procedure CreateTextBox(page: TWizardPage; caption: String; tb: TEdit; cmd: String);
+procedure CreateTextBox(page: TWizardPage; caption: String; tb: TNewEdit; cmd: String);
 var
 	newLabel: TLabel;
 begin
@@ -336,7 +326,7 @@ begin
 	newLabel.Height:= ScaleY(18);
 	newLabel.Transparent:= True;
 
-	tb:= TEdit.Create(page);
+	tb:= TNewEdit.Create(page);
 	tb.Hint:= cmd;
 	tb.Parent:= page.Surface;
 	tb.Left:= newLabel.Left;
@@ -380,6 +370,56 @@ begin
 	tb.OnChange:= @TextBoxChange;
 end;
 
+procedure CheckBoxClick(Sender: TObject);
+begin
+	Delete(
+		batStr,
+		Pos(
+			TNewCheckBox(Sender).Hint,
+			batStr
+		) + Length(
+			TNewCheckBox(Sender).Hint
+		) + 1,
+		1
+	);
+	Insert(
+		IntToStr(
+			Integer(
+				TNewCheckBox(Sender).Checked
+			)
+		),
+		batStr,
+		Pos(
+			TNewCheckBox(Sender).Hint,
+			batStr
+		) + Length(
+			TNewCheckBox(Sender).Hint
+		) + 1
+	);
+end;
+
+procedure CreateCheckBox(caption: String; chb: TNewCheckBox; cvar: String);
+begin
+	chb:= TNewCheckBox.Create(WizardForm);
+	chb.Hint:= cvar;
+	chb.Parent:= WizardForm.RunList.Parent;
+	chb.Left:= WizardForm.RunList.Left;
+	curHeightZ:= curHeightZ + 24;
+	chb.Top:= WizardForm.Runlist.Top + ScaleY(curHeightZ);
+	chb.Width:= ScaleX(144);
+	chb.Height:= ScaleY(chb.Height);
+	chb.Caption:= caption;
+	if Copy(batStr,Pos(cvar,batStr) + Length(cvar) + 1, 1) = '0' then
+	begin
+		chb.Checked:= False;
+	end
+	else
+	begin
+		chb.Checked:= True;
+	end;
+	chb.OnClick:= @CheckBoxClick;
+end;
+
 procedure ReplaceLabel(sourceLabel: TNewStaticText);
 var
 	newLabel: TLabel;
@@ -411,7 +451,7 @@ end;
 procedure InitializeWizard();
 var
 	cbAD, cbB, cbCE, cbCT, cbCD, cbCPT, cbCM, cbD, cbDPD, cbDL, cbDC, cbG, cbGOL, cbHDR, cbIDA, cbIGP, cbJB, cbLOD, cbLRA, cbLS, cbLFP, cbLVR, cbMSA, cbOGL, cbOLD, cbPM, cbPFX, cbRD, cbRIP, cbRMD, cbR, cbS, cbSCT, cbSBD, cbSUF, cbSQ, cbSD, cbTS, cbTFP, cbVM, cbVCM, cbVRS, cbW10, cbWP, cbXR, cbASS, cbBP, cbBCI, cbBMD, cbBSR, cbDLF, cbDBA, cbDBF, cbDCP, cbMA, cbP, cbSAD, cbVCD, cbMK : TNewComboBox;
-	tbMSL, tbMSC, tbMSR, tbIRS : TEdit;
+	tbMSL, tbMSC, tbMSR, tbIRS : TNewEdit;
 begin
 	if not LoadStringFromFile(TF2Path + '\tf\custom\vusaline_configuration\cfg\settings.cfg', cfgAnsiStr) then
 	begin
@@ -419,6 +459,7 @@ begin
 		LoadStringFromFile(ExpandConstant('{tmp}\settings.cfg'), cfgAnsiStr);
 	end;
 	cfgStr:= cfgAnsiStr;
+
 	ExtractTemporaryFile('InnerPageBackground.bmp');
 	ExtractTemporaryFile('PageBackground.bmp');
 	ExtractTemporaryFile('WizardFormBackground.bmp');
@@ -485,23 +526,23 @@ begin
 	BackgroundBmp.Stretch:= True;
 	BackgroundBmp.Align:= alClient;
 	BackgroundBmp.Parent:= SettingsPageC.Surface;
-	CreateDropDown(SettingsPageC, 'Weather particle effects', cbWP, 'weather_particles', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Player x-rays', cbXR, 'xray', 'Disabled', 'Names & healthbars', 'Names, healthbars & outlines', '', '', '');
+	CreateDropDown(SettingsPageC, 'Player x-rays', cbXR, 'xray', 'Disabled', 'Names && healthbars', 'Names, healthbars && outlines', '', '', '');
+	CreateDropDown(SettingsPageC, 'Pyrovision effects', cbPFX, 'pyrofx', 'Enable none', 'Enable static vignette', 'Enable DoF (depth of field)', 'Enable static vignette && DoF', '', '');
+	CreateDropDown(SettingsPageC, 'Ragdolls', cbRD, 'ragdolls', 'Disabled', 'Enable for 6 seconds', 'Enable for 11 seconds', '', '', '');
+	CreateDropDown(SettingsPageC, 'Raw mouse input', cbRIP, 'raw_input', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Ropes', cbR, 'ropes', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageC, 'Screenshot match end scoreboard', cbASS, 'auto_scoreboard_screenshot', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Backpack item borders', cbBP, 'backpack_borders', 'Disabled', 'Item quality borders', 'Item marketability borders', '', '', '');
-	CreateDropDown(SettingsPageC, 'Block catbot identify', cbBCI, 'block_cathook_identify', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Block minidumps', cbBMD, 'block_minidumps', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Block player stats reset', cbBSR, 'block_stats_reset', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Dashboard panel sliding animation', cbDBA, 'dashboard_anim', 'Disabled', 'Normal', 'Extra smooth', '', '', '');
-	CreateDropDown(SettingsPageC, 'All dashboard panels visible', cbDBF, 'dashboard_full', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Hit sounds', cbDL, 'ding_limit', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Disconnect prompt', cbDCP, 'disconnect_prompt', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Allow downloads', cbDLF, 'download_filter', 'None', 'Maps only', 'All except sounds', 'All', '', '');
-	CreateDropDown(SettingsPageC, 'Mute players mode', cbMA, 'mute_all', 'Mute voice chat only', 'Mute voice chat & text chat', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Crash protection', cbP, 'protection', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Additional sound delay', cbSAD, 'sound_additional_delay', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Skybox dimensions', cbSBD, 'skybox_dimensions', '2', '3', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Sleep whilst unfocused', cbSUF, 'sleep_unfocused','Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Sound quality', cbSQ, 'sound_quality', 'Low', 'High', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Text chat time', cbCT, 'chat_time', 'Disabled', '5 seconds', '10 seconds', '15 seconds', '', '');
+	CreateDropDown(SettingsPageC, 'Texture quality (picmip)', cbPM, 'picmip', 'Extremely low', 'Very low', 'Low', 'Medium', 'High', 'Very high');
+	CreateDropDown(SettingsPageC, 'Viewmodels', cbVM, 'viewmodels', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Virtual reality support', cbVRS, 'vr_support', '	N/A', '', '', '', '', '');
 	CreateDropDown(SettingsPageC, 'Voice chat delay', cbVCD, 'voice_chat_delay', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Movement keys', cbMK, 'movement_keys', 'WASD', 'ESDF', 'IJKL', 'ZQSD', ',AOE', 'WARS');
+	CreateDropDown(SettingsPageC, 'Voice chat mode', cbVCM, 'voice_chat_mode', 'N/A', '', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Weather particle effects', cbWP, 'weather_particles', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Windows 10 (single monitor)', cbW10, 'win10_mouse', 'No', 'Yes', '', '', '', '');
 	CreateTextBox(SettingsPageC, 'Left map vote bind', tbMSL, 'vote_mapleft');
 	CreateTextBox(SettingsPageC, 'Centre map vote bind', tbMSC, 'vote_mapcenter');
 	CreateTextBox(SettingsPageC, 'Right map vote bind', tbMSR, 'vote_mapright');
@@ -513,27 +554,27 @@ begin
 	BackgroundBmp.Stretch:= True;
 	BackgroundBmp.Align:= alClient;
 	BackgroundBmp.Parent:= SettingsPageB.Surface;
-	CreateDropDown(SettingsPageB, 'Anti-aliasing (MSAA)', cbMSA, 'msaa', 'Disabled', '2x', '4x', '8x', '', '');
-	CreateDropDown(SettingsPageB, 'OpenGL', cbOGL, 'opengl', 'NOT AVAILABLE', '', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Overlay decals (signs & posters)', cbOLD, 'overlay_decals', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Texture quality (picmip)', cbPM, 'picmip', 'Very low', 'Low', 'Medium', 'High', '', '');
-	CreateDropDown(SettingsPageB, 'Pyrovision effects', cbPFX, 'pyrofx', 'Enable none', 'Enable static vignette', 'Enable DoF (depth of field)', 'Enable static vignette & DoF', '', '');
-	CreateDropDown(SettingsPageB, 'Ragdolls', cbRD, 'ragdolls', 'Disabled', 'Enable for 6 seconds', 'Enable for 11 seconds', '', '', '');
-	CreateDropDown(SettingsPageB, 'Raw mouse input', cbRIP, 'raw_input', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Demo recording requirements', cbRMD, 'remove_demos_with_no_kills', 'None', '2 kills in 10 minutes', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Ropes', cbR, 'ropes', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Player shadow quality', cbS, 'shadows', 'Disabled', 'Low', 'High', '', '', '');
-	CreateDropDown(SettingsPageB, 'Critical hit text', cbSCT, 'show_crit_text', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Skybox dimensions', cbSBD, 'skybox_dimensions', '2', '3', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Sleep whilst unfocused', cbSUF, 'sleep_unfocused','Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Sound quality', cbSQ, 'sound_quality', 'Low', 'High', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Player spray decals', cbSD, 'spray_decals', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'HUD teammate status', cbTS, 'team_status', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Dual-core processor', cbDC, 'dual_core', 'No', 'Yes', '', '', '', '');
 	CreateDropDown(SettingsPageB, 'First-person bullet tracers', cbTFP, 'tracers_firstperson', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Viewmodels', cbVM, 'viewmodels', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Voice chat mode', cbVCM, 'voice_chat_mode', 'NOT AVAILABLE', '', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Virtual reality support', cbVRS, 'vr_support', '	NOT AVAILABLE', '', '', '', '', '');
-	CreateDropDown(SettingsPageB, 'Windows 10 (single monitor)', cbW10, 'win10_mouse', 'No', 'Yes', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Gibs/giblets', cbG, 'gibs', 'Disabled', 'Enabled', 'Brutal', '', '', '');
+	CreateDropDown(SettingsPageB, 'Glow outlines', cbGOL, 'glow_outlines', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'HUD teammate status', cbTS, 'team_status', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'High dynamic range', cbHDR, 'hdr', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Hit sounds', cbDL, 'ding_limit', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'In-game prompts', cbIGP, 'ingame_prompts', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Jigglebones', cbJB, 'jigglebones', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Level of detail', cbLOD, 'lod', 'Low', 'Medium', 'High', '', '', '');
+	CreateDropDown(SettingsPageB, 'Low RAM', cbLRA, 'low_ram', 'No', 'Yes', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Low VRAM', cbLVR, 'low_vram', 'N/A', '', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Low frame rate (<60fps)', cbLFP, 'low_fps', 'No', 'Yes', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Max decals', cbD, 'decals', 'Disabled', '1', '15', '75', '200', '2048');
+	CreateDropDown(SettingsPageB, 'Movement keys', cbMK, 'movement_keys', 'WASD', 'ESDF', 'IJKL', 'ZQSD', ',AOE', 'WARS');
+	CreateDropDown(SettingsPageB, 'Mute players mode', cbMA, 'mute_all', 'Mute voice chat only', 'Mute voice chat && text chat', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'OpenGL', cbOGL, 'opengl', 'N/A', '', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Overlay decals (signs & posters)', cbOLD, 'overlay_decals', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Packet loss (unstable network)', cbLS, 'loss_severity', 'None', 'Low', 'High', '', '', '');
+	CreateDropDown(SettingsPageB, 'Player shadow quality', cbS, 'shadows', 'Disabled', 'Low', 'High', '', '', '');
+	CreateDropDown(SettingsPageB, 'Player spray decals', cbSD, 'spray_decals', 'Disabled', 'Enabled', '', '', '', '');
 
 	SettingsPageA:= CreateCustomPage(wpSelectDir, 'Settings page 1', 'Performance settings');
 	BackgroundBmp:= TBitmapImage.Create(SettingsPageA);
@@ -541,28 +582,28 @@ begin
 	BackgroundBmp.Stretch:= True;
 	BackgroundBmp.Align:= alClient;
 	BackgroundBmp.Parent:= SettingsPageA.Surface;
+	CreateDropDown(SettingsPageA, 'Additional sound delay', cbSAD, 'sound_additional_delay', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'All dashboard panels visible', cbDBF, 'dashboard_full', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Allow downloads', cbDLF, 'download_filter', 'None', 'Maps only', 'All except sounds', 'All', '', '');
+	CreateDropDown(SettingsPageA, 'Anti-aliasing (MSAA)', cbMSA, 'msaa', 'Disabled', '2x', '4x', '8x', '', '');
 	CreateDropDown(SettingsPageA, 'Auto record demos', cbAD, 'auto_demos', 'None', 'Competitive Matches', 'Tournament Matches', 'All matches', '', '');
+	CreateDropDown(SettingsPageA, 'Backpack item borders', cbBP, 'backpack_borders', 'Disabled', 'Item quality borders', 'Item marketability borders', '', '', '');
+	CreateDropDown(SettingsPageA, 'Block catbot identify', cbBCI, 'block_cathook_identify', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Block minidumps', cbBMD, 'block_minidumps', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Block player stats reset', cbBSR, 'block_stats_reset', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageA, 'Blood decals', cbB, 'blood', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageA, 'Centred character eyes', cbCE, 'centered_eyes', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Text chat time', cbCT, 'chat_time', 'Disabled', '5 seconds', '10 seconds', '15 seconds', '', '');
-	CreateDropDown(SettingsPageA, 'Character detail', cbCD, 'class_detail', 'Disable expressions, eyes & teeth', 'Disable expressions', 'Disable none', '', '', '');
-	CreateDropDown(SettingsPageA, 'Contract progress type', cbCPT, 'contract_progress_type', 'Don''t show contracts', 'Show active contracts only', 'Show all contracts', '', '', '');
+	CreateDropDown(SettingsPageA, 'Character detail', cbCD, 'class_detail', 'Disable expressions, eyes && teeth', 'Disable expressions', 'Disable none', '', '', '');
 	CreateDropDown(SettingsPageA, 'Complex (fancy) material shaders', cbCM, 'complex_mats', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Max decals', cbD, 'decals', 'Disabled', '1', '15', '75', '200', '2048');
-	CreateDropDown(SettingsPageA, 'Detail prop sprites', cbDPD, 'detail_props_distance', 'Disabled', 'Low', 'Medium', 'High', 'Very high', '');
-	CreateDropDown(SettingsPageA, 'Dual-core processor', cbDC, 'dual_core', 'No', 'Yes', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Gibs/giblets', cbG, 'gibs', 'Disabled', 'Enabled', 'Brutal', '', '', '');
-	CreateDropDown(SettingsPageA, 'Glow outlines', cbGOL, 'glow_outlines', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'High dynamic range', cbHDR, 'hdr', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Contract progress type', cbCPT, 'contract_progress_type', 'Don''t show contracts', 'Show active contracts only', 'Show all contracts', '', '', '');
+	CreateDropDown(SettingsPageA, 'Crash protection', cbP, 'protection', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Critical hit text', cbSCT, 'show_crit_text', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageA, 'Crosshair target avatar', cbIDA, 'idavatar', 'Disabled', 'Friends only', 'Everyone', '', '', '');
-	CreateDropDown(SettingsPageA, 'In-game prompts', cbIGP, 'ingame_prompts', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Jigglebones', cbJB, 'jigglebones', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Level of detail', cbLOD, 'lod', 'Low', 'Medium', 'High', '', '', '');
-	CreateDropDown(SettingsPageA, 'Packet loss (unstable network)', cbLS, 'loss_severity', 'None', 'Low', 'High', '', '', '');
-	CreateDropDown(SettingsPageA, 'Low frame rate (<60fps)', cbLFP, 'low_fps', 'No', 'Yes', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Low RAM', cbLRA, 'low_ram', 'No', 'Yes', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Low VRAM', cbLVR, 'low_vram', 'NOT AVAILABLE', '', '', '', '', '');
-	
+	CreateDropDown(SettingsPageA, 'Dashboard panel sliding animation', cbDBA, 'dashboard_anim', 'Disabled', 'Normal', 'Extra smooth', '', '', '');
+	CreateDropDown(SettingsPageA, 'Demo recording requirements', cbRMD, 'remove_demos_with_no_kills', 'None', '2 kills in 10 minutes', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Detail prop sprites', cbDPD, 'detail_props_distance', 'Disabled', 'Low', 'Medium', 'High', 'Very high', '');
+	CreateDropDown(SettingsPageA, 'Disconnect prompt', cbDCP, 'disconnect_prompt', 'Disabled', 'Enabled', '', '', '', '');
+		
 	WizardForm.NextButton.Left := WizardForm.BackButton.Left + WizardForm.BackButton.Width + ScaleX(2);
 	WizardForm.CancelButton.Left := WizardForm.NextButton.Left + WizardForm.NextButton.Width + ScaleX(3);
 	WizardForm.CancelButton.Top := WizardForm.NextButton.Top;
@@ -575,7 +616,14 @@ begin
 	Result:=True;
 end;
 
+procedure RunCheckBoxClick(Sender: TObject);
+begin
+	WizardForm.RunList.Checked[0]:= TNewCheckBox(Sender).Checked;
+end;
+
 procedure CurPageChanged(CurPageID: Integer);
+var
+	RunCheckBox, chbBCC, chbBCR, chbBSC, chbBVR, chbDHS, chbDMI, chbDVL, chbNSD : TNewCheckBox;
 begin
 	if CurPageID = wpSelectDir then
 	begin
@@ -588,10 +636,40 @@ begin
 	end
 	else if CurPageID = wpFinished then
 	begin
+		if not LoadStringFromFile(TF2Path + '\Vusaline\file_operations.bat', batAnsiStr) then
+		begin
+			ExtractTemporaryFile('file_operations.bat');
+			LoadStringFromFile(ExpandConstant('{tmp}\file_operations.bat'), batAnsiStr);
+		end;
+		batStr:= batAnsiStr;
+	
 		ReplaceLabel(WizardForm.FinishedLabel);
-		WizardForm.RunList.Width:= ScaleX(141);
-		WizardForm.RunList.Height:= ScaleY(21);
+		RunCheckBox:= TNewCheckBox.Create(WizardForm);
+		RunCheckBox.Parent:= WizardForm.RunList.Parent;
+		RunCheckBox.Left:= WizardForm.RunList.Left;
+		RunCheckBox.Top:= WizardForm.RunList.Top;
+		RunCheckBox.Width:= ScaleX(144);
+		RunCheckBox.Height:= ScaleY(RunCheckBox.Height);
+		RunCheckBox.Checked:= WizardForm.RunList.Checked[0];
+		RunCheckBox.Caption:= WizardForm.RunList.ItemCaption[0];
+		RunCheckBox.OnClick:= @RunCheckBoxClick;
+		WizardForm.RunList.Visible:= False;
+		
+		CreateCheckBox('Block crash reports ', chbBCR, 'block_crash_reporting');
+		CreateCheckBox('Block CELT audio codec', chbBCC, 'block_celt_codec');
+		CreateCheckBox('Block Speex audio codec', chbBSC, 'block_speex_codec');
+		CreateCheckBox('Block VR', chbBVR, 'block_vr');
+		CreateCheckBox('Disable HL2 sounds', chbDHS, 'disable_hl2_sounds');
+		CreateCheckBox('Disable all voicelines', chbDVL, 'disable_voicelines');
+		CreateCheckBox('Disable map intros', chbDMI, 'disable_map_intros');
+		//CreateCheckbox('Use new SDL2', cbhNSD, 'use_new_sdl2');
 	end;
+end;
+
+procedure SaveBatchSettings;
+begin
+		batAnsiStr:= batStr;
+		SaveStringToFile(ExpandConstant('{app}/Vusaline/file_operations.bat'), batAnsiStr, False);
 end;
 
 procedure CurStepChanged(CurStep: TSetupStep);

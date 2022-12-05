@@ -2,25 +2,25 @@
 :: A player with a modified TF2 instance isn't valuable data
 set /A block_crash_reporting=1
 :: Inferior to the new Opus codec in every conceivable way; Speex might be used on a community server for nostalgia and/or memeing reasons
-set /A block_speex_voice_codec=1
-:: Also worse than Opus (sv_voicecodec steam); again, a community server might use this
-set /A block_celt_voice_codec=1
+set /A block_speex_codec=1
+:: Also worse than Opus (sv_codec steam); again, a community server might use this
+set /A block_celt_codec=1
 :: Virtual Reality only works on VR headsets with a Direct Mode OFF option; you can use 'Virtual Desktop' on Quest 1/2 to workaround having no Direct Mode, but good luck getting that working correctly
 set /A block_vr=1
 :: Class voicelines don't play anymore, it's an interesting experience
-set /A block_all_voicelines=0
-:: Never set to 1 if you know nothing about SDL2 (including its usage in TF2)
-set /A use_new_sdl2=0
+set /A disable_voicelines=0
 :: Breaks unimportant sounds on maps, notably on arena_byre; will also spam console with attempts to load missing audio files
 set /A disable_hl2_sounds=0
 :: Gets in the way of playing the game
 set /A disable_map_intros=1
+:: Never set to 1 if you know nothing about SDL2 (including its usage in TF2)
+set /A use_new_sdl2=0
 
 @echo off
 color 3
 cd ..
 if not exist tf (
-	echo ERROR: INCORRECT DIRECTORY PLACEMENT! THIS FILE MUST BE PLACED IN "Team Fortress 2\Vusaline"!
+	echo ERROR: Incorrect directory placement! This file must be placed in 'Team Fortress 2\Vusaline'!
 	pause
 	exit 3
 )
@@ -66,17 +66,17 @@ if %block_crash_reporting%==0 (
 	cd "steamapps\common\Team Fortress 2\bin"
 )
 
-if %block_speex_voice_codec%==1 (
+if %block_speex_codec%==1 (
 	move /y vaudio_speex.dll vaudio_speex.dll.disabled
 )
-if %block_speex_voice_codec%==0 (
+if %block_speex_codec%==0 (
 	move /y vaudio_speex.dll.disabled vaudio_speex.dll
 )
 
-if %block_celt_voice_codec%==1 (
+if %block_celt_codec%==1 (
 	move /y vaudio_celt.dll vaudio_celt.dll.disabled
 )
-if %block_celt_voice_codec%==0 (
+if %block_celt_codec%==0 (
 	move /y vaudio_celt.dll.disabled vaudio_celt.dll
 )
 
@@ -89,18 +89,11 @@ if %block_vr%==0 (
 	move /y sourcevr.dll.disabled sourcevr.dll
 )
 
-if %block_all_voicelines%==1 (
+if %disable_voicelines%==1 (
 	move /y mssmp3.asi mssmp3.asi.disabled
 )
-if %block_all_voicelines%==0 (
+if %disable_voicelines%==0 (
 	move /y mssmp3.asi.disabled mssmp3.asi
-)
-
-if %use_new_sdl2%==1 (
-	move /y SDL2.dll SDL2.dll.disabled
-)
-if %use_new_sdl2%==0 (
-	move /y SDL2.dll.disabled SDL2.dll
 )
 
 if %disable_hl2_sounds%==1 (
@@ -138,4 +131,12 @@ if %disable_map_intros%==0 (
 	cd ..\tf
 	move /y media media_disabled
 )
+
+if %use_new_sdl2%==1 (
+	move /y SDL2.dll SDL2.dll.disabled
+)
+if %use_new_sdl2%==0 (
+	move /y SDL2.dll.disabled SDL2.dll
+)
+
 exit 0
