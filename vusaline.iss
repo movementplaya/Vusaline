@@ -453,7 +453,11 @@ var
 	cbAD, cbB, cbCE, cbCT, cbCD, cbCPT, cbCM, cbD, cbDPD, cbDL, cbDC, cbG, cbGOL, cbHDR, cbIDA, cbIGP, cbJB, cbLOD, cbLRA, cbLS, cbLFP, cbLVR, cbMSA, cbOGL, cbOLD, cbPM, cbPFX, cbRD, cbRIP, cbRMD, cbR, cbS, cbSCT, cbSBD, cbSUF, cbSQ, cbSD, cbTS, cbTFP, cbVM, cbVCM, cbVRS, cbW10, cbWP, cbXR, cbASS, cbBP, cbBCI, cbBMD, cbBSR, cbDLF, cbDBA, cbDBF, cbDCP, cbMA, cbP, cbSAD, cbVCD, cbMK : TNewComboBox;
 	tbMSL, tbMSC, tbMSR, tbIRS : TNewEdit;
 begin
-	if not LoadStringFromFile(TF2Path + '\tf\custom\vusaline_configuration\cfg\settings.cfg', cfgAnsiStr) then
+	if LoadStringFromFile(TF2Path + '\tf\custom\vusaline_configuration\cfg\settings.cfg', cfgAnsiStr) then
+	begin
+		LoadStringFromFile(TF2Path + '\Vusaline\file_operations.bat', batAnsiStr)
+	end
+	else
 	begin
 		ExtractTemporaryFile('settings.cfg');
 		LoadStringFromFile(ExpandConstant('{tmp}\settings.cfg'), cfgAnsiStr);
@@ -636,7 +640,7 @@ begin
 	end
 	else if CurPageID = wpFinished then
 	begin
-		if not LoadStringFromFile(TF2Path + '\Vusaline\file_operations.bat', batAnsiStr) then
+		if Length(batAnsiStr) = 0 then
 		begin
 			ExtractTemporaryFile('file_operations.bat');
 			LoadStringFromFile(ExpandConstant('{tmp}\file_operations.bat'), batAnsiStr);
