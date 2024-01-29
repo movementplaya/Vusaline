@@ -33,7 +33,7 @@ WizardStyle=modern
 [Files]
 Source: "assets\*"; Flags: dontcopy
 Source: "bats\*"; DestDir: "{app}\Vusaline"; Flags: ignoreversion
-Source: "cfgs\*"; DestDir: "{app}\tf\custom\vusaline_configuration\cfg"; Flags: ignoreversion
+Source: "cfgs\*"; DestDir: "{app}\tf\cfg\Vusaline"; Flags: ignoreversion
 Source: "vpks\*"; DestDir: "{app}\tf\custom"; Flags: ignoreversion
 
 [Run]
@@ -43,14 +43,10 @@ Filename: "{app}\Vusaline\file_operations.bat"; Flags: postinstall runhidden; Be
 Filename: "{app}\Vusaline\revert_file_operations.bat"; Flags: runhidden
 
 [Code]
-//Welcome to hell
 var
-	cfgAnsiStr, batAnsiStr: AnsiString;
-	cfgStr, batStr, TF2Path, cvar : String;
+	cfgAnsiStr, batAnsiStr : AnsiString;
+	cfgStr, batStr, TF2Path : String;
 	curWidthA, curHeightA, curWidthB, curHeightB, curWidthC, curHeightC, curHeightZ : Integer;
-	cb: TNewComboBox;
-	tb: TNewEdit;
-	chb: TNewCheckBox;
 	BackgroundBmp: TBitmapImage;
 	SettingsPageA, SettingsPageB, SettingsPageC : TWizardPage;
 procedure LoadVCLStyle(VClStyleFile: String); external 'LoadVCLStyleW@files:VclStylesInno.dll stdcall delayload setuponly';
@@ -450,10 +446,10 @@ end;
 
 procedure InitializeWizard();
 var
-	cbAD, cbB, cbCE, cbCT, cbCD, cbCPT, cbCM, cbD, cbDPD, cbDL, cbDC, cbG, cbGOL, cbHDR, cbIDA, cbIGP, cbJB, cbLOD, cbLRA, cbLS, cbLFP, cbLVR, cbMSA, cbOGL, cbOLD, cbPM, cbPFX, cbRD, cbRIP, cbRMD, cbR, cbS, cbSCT, cbSBD, cbSUF, cbSQ, cbSD, cbTS, cbTFP, cbVM, cbVCM, cbVRS, cbW10, cbWP, cbXR, cbASS, cbBP, cbBCI, cbBMD, cbBSR, cbDLF, cbDBA, cbDBF, cbDCP, cbMA, cbP, cbSAD, cbVCD, cbMK : TNewComboBox;
+	cbAD, cbB, cbCE, cbCT, cbCD, cbCPT, cbCM, cbD, cbDPD, cbDL, cbDC, cbEAC, cbG, cbGOL, cbHDR, cbIDA, cbIGP, cbJB, cbLOD, cbLRA, cbLS, cbLFP, cbLVR, cbMSA, cbOGL, cbOLD, cbPM, cbPFX, cbRD, cbRIP, cbRMD, cbR, cbS, cbSCT, cbSBD, cbSUF, cbSQ, cbSD, cbTS, cbTFP, cbVM, cbVCM, cbVRS, cbW10, cbWP, cbXR, cbASS, cbBP, cbBMD, cbBSR, cbDLF, cbDBA, cbDBF, cbDCP, cbMA, cbP, cbSAD, cbVCD, cbMK : TNewComboBox;
 	tbMSL, tbMSC, tbMSR, tbIRS : TNewEdit;
 begin
-	if LoadStringFromFile(TF2Path + '\tf\custom\vusaline_configuration\cfg\settings.cfg', cfgAnsiStr) then
+	if LoadStringFromFile(TF2Path + '\tf\cfg\Vusaline\settings.cfg', cfgAnsiStr) then
 	begin
 		LoadStringFromFile(TF2Path + '\Vusaline\file_operations.bat', batAnsiStr)
 	end
@@ -535,7 +531,7 @@ begin
 	CreateDropDown(SettingsPageC, 'Ragdolls', cbRD, 'ragdolls', 'Disabled', 'Enable for 6 seconds', 'Enable for 11 seconds', '', '', '');
 	CreateDropDown(SettingsPageC, 'Raw mouse input', cbRIP, 'raw_input', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageC, 'Ropes', cbR, 'ropes', 'Disabled', 'Enabled', '', '', '', '');
-	CreateDropDown(SettingsPageC, 'Screenshot match end scoreboard', cbASS, 'auto_scoreboard_screenshot', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageC, 'Screenshot match-end scoreboard', cbASS, 'auto_scoreboard_screenshot', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageC, 'Skybox dimensions', cbSBD, 'skybox_dimensions', '2', '3', '', '', '', '');
 	CreateDropDown(SettingsPageC, 'Sleep whilst unfocused', cbSUF, 'sleep_unfocused','Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageC, 'Sound quality', cbSQ, 'sound_quality', 'Low', 'High', '', '', '', '');
@@ -558,7 +554,7 @@ begin
 	BackgroundBmp.Stretch:= True;
 	BackgroundBmp.Align:= alClient;
 	BackgroundBmp.Parent:= SettingsPageB.Surface;
-	CreateDropDown(SettingsPageB, 'Dual-core processor', cbDC, 'dual_core', 'No', 'Yes', '', '', '', '');
+	CreateDropDown(SettingsPageB, 'Eject ammo casings', cbEAC, 'eject_casings', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageB, 'First-person bullet tracers', cbTFP, 'tracers_firstperson', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageB, 'Gibs/giblets', cbG, 'gibs', 'Disabled', 'Enabled', 'Brutal', '', '', '');
 	CreateDropDown(SettingsPageB, 'Glow outlines', cbGOL, 'glow_outlines', 'Disabled', 'Enabled', '', '', '', '');
@@ -592,7 +588,6 @@ begin
 	CreateDropDown(SettingsPageA, 'Anti-aliasing (MSAA)', cbMSA, 'msaa', 'Disabled', '2x', '4x', '8x', '', '');
 	CreateDropDown(SettingsPageA, 'Auto record demos', cbAD, 'auto_demos', 'None', 'Competitive Matches', 'Tournament Matches', 'All matches', '', '');
 	CreateDropDown(SettingsPageA, 'Backpack item borders', cbBP, 'backpack_borders', 'Disabled', 'Item quality borders', 'Item marketability borders', '', '', '');
-	CreateDropDown(SettingsPageA, 'Block catbot identify', cbBCI, 'block_cathook_identify', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageA, 'Block minidumps', cbBMD, 'block_minidumps', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageA, 'Block player stats reset', cbBSR, 'block_stats_reset', 'Disabled', 'Enabled', '', '', '', '');
 	CreateDropDown(SettingsPageA, 'Blood decals', cbB, 'blood', 'Disabled', 'Enabled', '', '', '', '');
@@ -605,8 +600,9 @@ begin
 	CreateDropDown(SettingsPageA, 'Crosshair target avatar', cbIDA, 'idavatar', 'Disabled', 'Friends only', 'Everyone', '', '', '');
 	CreateDropDown(SettingsPageA, 'Dashboard panel sliding animation', cbDBA, 'dashboard_anim', 'Disabled', 'Normal', 'Extra smooth', '', '', '');
 	CreateDropDown(SettingsPageA, 'Demo recording requirements', cbRMD, 'remove_demos_with_no_kills', 'None', '2 kills in 10 minutes', '', '', '', '');
-	CreateDropDown(SettingsPageA, 'Detail prop sprites', cbDPD, 'detail_props_distance', 'Disabled', 'Low', 'Medium', 'High', 'Very high', '');
+	CreateDropDown(SettingsPageA, 'Detail prop distance', cbDPD, 'detail_props_distance', 'Disabled', 'Low', 'Medium', 'High', 'Very high', '');
 	CreateDropDown(SettingsPageA, 'Disconnect prompt', cbDCP, 'disconnect_prompt', 'Disabled', 'Enabled', '', '', '', '');
+	CreateDropDown(SettingsPageA, 'Dual-core processor', cbDC, 'dual_core', 'No', 'Yes', '', '', '', '');
 		
 	WizardForm.NextButton.Left := WizardForm.BackButton.Left + WizardForm.BackButton.Width + ScaleX(2);
 	WizardForm.CancelButton.Left := WizardForm.NextButton.Left + WizardForm.NextButton.Width + ScaleX(3);
@@ -681,7 +677,7 @@ begin
 	if CurStep = ssDone then
 	begin
 		cfgAnsiStr:= cfgStr;
-		SaveStringToFile(ExpandConstant('{app}/tf/custom/vusaline_configuration/cfg/settings.cfg'), cfgAnsiStr, False);
+		SaveStringToFile(ExpandConstant('{app}/tf/cfg/Vusaline/settings.cfg'), cfgAnsiStr, False);
 	end;
 end;
 

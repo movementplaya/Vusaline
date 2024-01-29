@@ -18,20 +18,8 @@ set /A use_new_sdl2=0
 
 @echo off
 color 3
-cd ..
-if not exist tf (
-	echo ERROR: Incorrect directory placement! This file must be placed in 'Team Fortress 2\Vusaline'!
-	pause
-	exit 3
-)
-if exist tf\cfg\user\autoexec.cfg (
-	move /y tf\cfg\user\autoexec.cfg tf\cfg\autoexec2.cfg
-) else (
-	move /y tf\cfg\autoexec.cfg tf\cfg\autoexec2.cfg
-)
-rd /s /q tf\cfg\user
 
-cd bin
+cd ..\bin
 move /y bugreporter.dll bugreporter.dll.disabled
 move /y bugreporter_filequeue.dll bugreporter_filequeue.dll.disabled
 move /y bugreporter_public.dll bugreporter_public.dll.disabled
@@ -96,47 +84,40 @@ if %disable_voicelines%==0 (
 	move /y mssmp3.asi.disabled mssmp3.asi
 )
 
-if %disable_hl2_sounds%==1 (
-	cd ..\hl2
-	move /y hl2_sound_misc_000.vpk hl2_sound_misc_000.vpk.disabled
-	move /y hl2_sound_misc_001.vpk hl2_sound_misc_001.vpk.disabled
-	move /y hl2_sound_misc_002.vpk hl2_sound_misc_002.vpk.disabled
-	move /y hl2_sound_misc_dir.vpk hl2_sound_misc_dir.vpk.disabled
-	move /y hl2_sound_vo_english_000.vpk hl2_sound_vo_english_000.vpk.disabled
-	move /y hl2_sound_vo_english_001.vpk hl2_sound_vo_english_001.vpk.disabled
-	move /y hl2_sound_vo_english_002.vpk hl2_sound_vo_english_002.vpk.disabled
-	move /y hl2_sound_vo_english_003.vpk hl2_sound_vo_english_003.vpk.disabled
-	move /y hl2_sound_vo_english_004.vpk hl2_sound_vo_english_004.vpk.disabled
-	move /y hl2_sound_vo_english_dir.vpk hl2_sound_vo_english_dir.vpk.disabled
-)
-if %disable_hl2_sounds%==0 (
-	cd ..\hl2
-	move /y hl2_sound_misc_000.vpk.disabled hl2_sound_misc_000.vpk
-	move /y hl2_sound_misc_001.vpk.disabled hl2_sound_misc_001.vpk
-	move /y hl2_sound_misc_002.vpk.disabled hl2_sound_misc_002.vpk
-	move /y hl2_sound_misc_dir.vpk.disabled hl2_sound_misc_dir.vpk
-	move /y hl2_sound_vo_english_000.vpk.disabled hl2_sound_vo_english_000.vpk
-	move /y hl2_sound_vo_english_001.vpk.disabled hl2_sound_vo_english_001.vpk
-	move /y hl2_sound_vo_english_002.vpk.disabled hl2_sound_vo_english_002.vpk
-	move /y hl2_sound_vo_english_003.vpk.disabled hl2_sound_vo_english_003.vpk
-	move /y hl2_sound_vo_english_004.vpk.disabled hl2_sound_vo_english_004.vpk
-	move /y hl2_sound_vo_english_dir.vpk.disabled hl2_sound_vo_english_dir.vpk
-)
-
-if %disable_map_intros%==1 (
-	cd ..\tf
-	move /y media_disabled media
-)
-if %disable_map_intros%==0 (
-	cd ..\tf
-	move /y media media_disabled
-)
-
 if %use_new_sdl2%==1 (
 	move /y SDL2.dll SDL2.dll.disabled
 )
 if %use_new_sdl2%==0 (
 	move /y SDL2.dll.disabled SDL2.dll
+)
+
+cd ..\hl2
+move /y hl2_sound_vo_english_dir.vpk hl2_sound_vo_english_dir.vpk.disabled
+move /y hl2_sound_vo_english_004.vpk hl2_sound_vo_english_004.vpk.disabled
+move /y hl2_sound_vo_english_003.vpk hl2_sound_vo_english_003.vpk.disabled
+move /y hl2_sound_vo_english_002.vpk hl2_sound_vo_english_002.vpk.disabled
+move /y hl2_sound_vo_english_001.vpk hl2_sound_vo_english_001.vpk.disabled
+move /y hl2_sound_vo_english_000.vpk hl2_sound_vo_english_000.vpk.disabled
+
+if %disable_hl2_sounds%==1 (
+	move /y hl2_sound_misc_000.vpk hl2_sound_misc_000.vpk.disabled
+	move /y hl2_sound_misc_001.vpk hl2_sound_misc_001.vpk.disabled
+	move /y hl2_sound_misc_002.vpk hl2_sound_misc_002.vpk.disabled
+	move /y hl2_sound_misc_dir.vpk hl2_sound_misc_dir.vpk.disabled
+)
+if %disable_hl2_sounds%==0 (
+	move /y hl2_sound_misc_000.vpk.disabled hl2_sound_misc_000.vpk
+	move /y hl2_sound_misc_001.vpk.disabled hl2_sound_misc_001.vpk
+	move /y hl2_sound_misc_002.vpk.disabled hl2_sound_misc_002.vpk
+	move /y hl2_sound_misc_dir.vpk.disabled hl2_sound_misc_dir.vpk
+)
+
+cd ..\tf
+if %disable_map_intros%==1 (
+	move /y media media_disabled
+)
+if %disable_map_intros%==0 (
+	move /y media_disabled media
 )
 
 exit 0
